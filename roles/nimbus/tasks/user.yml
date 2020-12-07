@@ -1,0 +1,7 @@
+---
+- name: Add proper groups to selected default user
+  user:
+    name: "{{ default_user.username }}"
+    state: present
+    append: yes
+    groups: "{{ default_user.groups }}"

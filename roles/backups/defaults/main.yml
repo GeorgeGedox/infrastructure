@@ -1,0 +1,6 @@
+---
+backup_log_dir: /var/log/backups
+borgmatic_version: 1.5.12
+borgmatic_configs: []
+backup_setup_cron: yes
+backup_schedule: "0 * * * *"

@@ -1,0 +1,39 @@
+---
+- name: Install pip
+  apt:
+    name: python3-pip
+    update_cache: yes
+    state: present
+
+- name: Install docker pip module
+  pip:
+    name: docker
+    state: present
+
+- name: Create directory structure for containers
+  file:
+    path: "{{ containers_managed_dir }}"
+    state: directory
+    owner: "{{ containers_user }}"
+    group: "{{ containers_group }}"
+
+- name: Run ddclient container
+  docker_container:
+    name: ddclient
+    image: linuxserver/ddclient
+    state: started
+    env:
+      PUID: "{{ containers_environment.ddclient.PUID }}"
+      PGID: "{{ containers_environment.ddclient.PGID }}"
+      TZ: "{{ containers_environment.ddclient.TZ }}"
+    volumes:
+      - "{{ containers_managed_dir }}/ddclient:/config"
+    restart_policy: unless-stopped
+
+- name: Provision ddclient config file
+  template:
+    src: "{{ containers_templates.ddclient }}"
+    dest: "{{ containers_managed_dir }}/ddclient/ddclient.conf"
+    owner: "{{ containers_user }}"
+    group: "{{ containers_group }}"
+  notify: restart ddclient container

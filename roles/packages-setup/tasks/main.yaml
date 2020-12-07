@@ -1,0 +1,13 @@
+---
+- name: Update all packages
+  apt:
+    update_cache: yes
+    upgrade: safe
+    autoremove: yes
+  when: packages_update
+
+- name: Install specified packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ setup_packages }}"

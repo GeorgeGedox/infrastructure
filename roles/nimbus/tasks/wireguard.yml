@@ -1,0 +1,41 @@
+---
+- name: Wireguard | Install latest kernel headers and kernel
+  apt:
+    name: 
+      - raspberrypi-kernel-headers
+      - raspberrypi-kernel
+    state: latest
+    update_cache: yes
+  register: kernel_update
+
+- name: Wireguard | Reboot if kernel changed
+  reboot:
+    reboot_timeout: 600
+  when: kernel_update.changed
+
+- name: Wireguard | Add raspbian testing repository
+  apt_repository:
+    repo: deb http://archive.raspbian.org/raspbian testing main
+    state: present
+    filename: testing
+
+- name: Lower priority for testing repository
+  copy:
+    src: limit-testing
+    dest: /etc/apt/preferences.d/limit-testing
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Install wireguard
+  apt:
+    name: wireguard
+    state: present
+    update_cache: yes
+
+- name: Setup IP forwarding using sysctl
+  ansible.posix.sysctl:
+    name: net.ipv4.ip_forward
+    value: '1'
+    sysctl_set: yes
+

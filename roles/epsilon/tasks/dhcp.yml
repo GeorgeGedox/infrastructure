@@ -1,0 +1,13 @@
+---
+- name: Configure static ip
+  template:
+    src: netplan.j2
+    dest: /etc/netplan/00-installer-config.yaml
+    owner: root
+    group: root
+    mode: "644"
+  register: dhcp_config
+
+- name: Apply new netplan
+  command: netplan apply
+  when: dhcp_config.changed

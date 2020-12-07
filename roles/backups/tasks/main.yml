@@ -1,0 +1,59 @@
+---
+- name: Install borg and dependencies
+  apt:
+    name: ['borgbackup', 'python3', 'python3-pip']
+    state: present
+
+- name: Install borgmatic
+  pip:
+    executable: pip3
+    state: present
+    version: "{{ borgmatic_version }}"
+    name: borgmatic
+
+- name: Prepare directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: "0755"
+    owner: root
+    group: root
+  with_items:
+    - /etc/borgmatic.d
+    - "{{ backup_log_dir }}"
+
+- name: Populate configs
+  template:
+    src: borgmatic_config.j2
+    dest: /etc/borgmatic.d/{{ item.name }}.yaml
+    owner: root
+    group: root
+    mode: "0600"
+  loop: "{{ borgmatic_configs }}"
+
+- name: Setup crontab file
+  template:
+    src: cronjob.j2
+    dest: /etc/cron.d/backups
+    owner: root
+    group: root
+    mode: 0644
+  when: backup_setup_cron
+
+- name: Setup log rotation
+  copy:
+    dest: /etc/logrotate.d/backups
+    owner: root
+    group: root
+    mode: 0644
+    content: |
+      # Ansible managed
+      {{ backup_log_dir }}/* {
+        daily
+        size 10M
+        rotate 3
+        compress
+        dateext
+        copytruncate
+        missingok
+      }

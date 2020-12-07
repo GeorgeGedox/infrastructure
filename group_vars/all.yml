@@ -1,0 +1,21 @@
+# Define this before running
+master_user:
+  username: paradox
+  key: https://github.com/georgegedox.keys
+  timezone: "Europe/Bucharest"
+
+# Elevated group name
+elevated_group_name: empowered
+
+# geerlingguy.ntp
+ntp_timezone: "{{ master_user.timezone }}"
+
+# oefenweb.fail2ban
+fail2ban_ignoreips:
+  - 127.0.0.1/8
+  - 192.168.0.0/24
+fail2ban_services:
+  - name: sshd
+    port: 22
+    maxretry: 3
+    bantime: -1

@@ -1,0 +1,46 @@
+---
+- name: Install dependencies
+  apt:
+    name:
+       - figlet
+       - lolcat
+       - hddtemp
+    state: present
+  become: yes
+  tags: awesome-motd
+
+- name: Check if motd scripts were provisioned before
+  stat:
+    path: /etc/update-motd.d/.ansible
+  register: motd_lock
+  tags: awesome-motd
+
+- name: Delete all current scripts and replace with new ones
+  block:
+    - name: Remove all files in /etc/update-motd.d
+      file:
+        path: /etc/update-motd.d
+        state: absent
+
+    - name: Recreate directory /etc/update-motd.d
+      file:
+        path: /etc/update-motd.d
+        state: directory
+        mode: "755"
+
+    - name: Copy motd files
+      copy:
+        src: "{{ item.src }}"
+        dest: "/etc/update-motd.d/{{ item.name }}"
+        mode: "755"
+      loop: "{{ motd_files }}"
+
+    - name: Add .ansible file for future provisions
+      copy:
+        dest: /etc/update-motd.d/.ansible
+        content: ""
+        force: no
+        mode: "644"
+  become: yes
+  when: not motd_lock.stat.exists
+  tags: awesome-motd

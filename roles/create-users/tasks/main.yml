@@ -1,0 +1,34 @@
+---
+- name: Run the whole thing
+  block:
+    - name: Create '{{ elevated_group_name }}' group
+      group:
+        name: "{{ elevated_group_name }}"
+        state: present
+
+    - name: Allow '{{ elevated_group_name }}' group passwordless sudo
+      lineinfile:
+        path: /etc/sudoers
+        state: present
+        regexp: '^%{{ elevated_group_name }}'
+        line: '%{{ elevated_group_name }} ALL=(ALL) NOPASSWD: ALL'
+        validate: '/usr/sbin/visudo -cf %s'
+
+    - name: Create users and add them to the elevated group
+      user:
+        name: "{{ item.user }}"
+        state: present
+        groups: "{{ elevated_group_name }}"
+        append: yes
+        create_home: yes
+        shell: /bin/bash
+      loop: "{{ ssh_users }}"
+
+    - name: Set authorized keys for users
+      authorized_key:
+        user: "{{ item.user }}"
+        key: "{{ item.key }}"
+        state: present
+      loop: "{{ ssh_users }}"
+  when: ssh_users|length > 0
+  become: yes

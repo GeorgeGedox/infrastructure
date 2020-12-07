@@ -1,0 +1,54 @@
+---
+- name: Install docker pip module
+  pip:
+    name: docker
+    state: present
+
+- name: Create directory structure for containers
+  file:
+    path: "{{ containers_managed_dir }}"
+    state: directory
+    owner: "{{ containers_user }}"
+    group: "{{ containers_group }}"
+
+- name: Run Apprise container
+  docker_container:
+    name: apprise
+    image: caronc/apprise:latest
+    state: started
+    volumes:
+      - "{{ containers_managed_dir }}/apprise:/config"
+    ports:
+      - "8500:8000"
+    env:
+      APPRISE_STATEFUL_MODE: "simple"
+    restart_policy: unless-stopped
+
+- name: Run Adguard Home container
+  docker_container:
+    name: adguard
+    image: adguard/adguardhome:edge
+    state: started
+    volumes:
+      - "{{ containers_managed_dir }}/adguard/data:/opt/adguardhome/work"
+      - "{{ containers_managed_dir }}/adguard/config:/opt/adguardhome/conf"
+      - "/etc/dhcpcd.conf:/etc/dhcpcd.conf"
+    network_mode: host
+    restart_policy: unless-stopped
+
+- name: Run Duplicati container
+  docker_container:
+    name: duplicati
+    image: linuxserver/duplicati
+    state: started
+    hostname: NIMBUS
+    volumes:
+      - "{{ containers_managed_dir }}/duplicati:/config"
+      - "{{ containers_managed_dir }}:/source/container_data"
+    ports:
+      - "8200:8200"
+    env:
+      PUID: "0"
+      PGID: "0"
+      TZ: "{{ master_user.timezone }}"
+    restart_policy: unless-stopped

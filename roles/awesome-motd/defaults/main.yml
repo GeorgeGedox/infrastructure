@@ -1,0 +1,14 @@
+---
+motd_files:
+  - src: 10-hostname-color
+    name: 10-hostname-color
+  - src: 20-sysinfo
+    name: 20-sysinfo
+  - src: 35-diskspace
+    name: 35-diskspace
+  - src: 36-diskstatus
+    name: 36-diskstatus
+  - src: 40-services
+    name: 40-services
+  - src: 60-docker
+    name: 60-docker

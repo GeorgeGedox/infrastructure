@@ -1,0 +1,17 @@
+---
+- name: start samba
+  service:
+    name: smbd
+    enabled: yes
+    state: started
+
+- name: restart samba
+  service:
+    name: smbd
+    state: restarted
+
+- name: restart ddclient container
+  docker_container:
+    name: ddclient
+    state: started
+    restart: yes

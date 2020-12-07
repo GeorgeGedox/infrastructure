@@ -1,0 +1,3 @@
+# {{ ansible_managed }}
+
+{{ backup_schedule }} root /usr/local/bin/borgmatic --log-file {{ backup_log_dir }}/latest.log --log-file-verbosity {{ backup_log_verbosity }} > /dev/null 2>&1

@@ -1,0 +1,14 @@
+---
+- name: Install Samba
+  apt:
+    name: samba
+    state: present
+  notify: start samba
+
+- name: Update Samba config
+  template:
+    src: "{{ samba_config_template }}"
+    dest: /etc/samba/smb.conf
+    owner: root
+    group: root
+  notify: restart samba

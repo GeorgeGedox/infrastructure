@@ -1,0 +1,54 @@
+# {{ ansible_managed }}
+location:
+    source_directories:
+{% for dir in item.location.source_dirs %}
+    - {{ dir }}
+{% endfor %}
+    repositories:
+{% for repo in item.location.repositories %}
+    - {{ repo }}
+{% endfor %}
+{% if item.location.exclude_patterns is defined %}
+    exclude_patterns:
+{% for pattern in item.location.exclude_patterns %}
+    - {{ pattern }}
+{% endfor %}
+{% endif %}
+{% if item.location.one_fs is defined %}
+    one_file_system: {{ item.location.one_fs }}
+{% endif %}
+{% if item.location.remote_executable is defined %}
+    remote_path: {{ item.location.remote_executable }}
+{% endif %}
+
+storage:
+{% if item.storage.passphrase is defined %}
+    encryption_passphrase: "{{ item.storage.passphrase }}"
+{% endif %}
+{% if item.storage.compression is defined %}
+    compression: {{ item.storage.compression }}
+{% endif %}
+{% if item.storage.umask is defined %}
+    umask: {{ item.storage.umask }}
+{% endif %}
+{% if item.storage.ssh_command is defined %}
+    ssh_command: "{{ item.storage.ssh_command }}"
+{% endif %}
+    archive_name_format: "{{ item.name }}-{hostname}-{now}"
+    extra_borg_options:
+        init: --make-parent-dirs
+
+retention:
+    prefix: {{ item.name }}-{hostname}
+    {{ item.retention | to_nice_yaml(indent=4, width=2000) | indent(width=4) }}
+
+consistency:
+{% if item.consistency.check_last is defined %}
+    check_last: {{ item.consistency.check_last }}
+{% endif %}
+    prefix: {{ item.name }}-{hostname}
+
+{% if item.hooks is defined %}
+hooks:
+    {{ item.hooks | to_nice_yaml(indent=4, width=3000) | indent(width=4) }}
+{% endif %}

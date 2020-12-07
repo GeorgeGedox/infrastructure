@@ -1,0 +1,25 @@
+---
+- hosts: epsilon
+  become: yes
+  vars_files:
+    - vars/vault.yml
+  roles:
+    - role: packages-setup
+    - role: geerlingguy.ntp
+    - role: oefenweb.fail2ban
+    - role: create-users
+    - role: geerlingguy.docker
+    - role: epsilon
+    - role: awesome-motd
+    - role: backups
+      tags: backups
+
+- hosts: nimbus
+  become: yes
+  roles:
+    - role: packages-setup
+    - role: create-users
+    - role: geerlingguy.ntp
+    - role: oefenweb.fail2ban
+    - role: nimbus
+    - role: awesome-motd
