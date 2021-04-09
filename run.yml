@@ -12,14 +12,14 @@
     - role: epsilon
     - role: awesome-motd
     - role: backups
-      tags: backups
 
-- hosts: nimbus
+- hosts: gamma
   become: yes
   roles:
     - role: packages-setup
-    - role: create-users
-    - role: geerlingguy.ntp
+    - role: geerlingguy.docker
     - role: oefenweb.fail2ban
-    - role: nimbus
+    - role: create-users
     - role: awesome-motd
+    - role: dir-skeleton
+    - role: ssh-protect

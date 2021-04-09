@@ -22,6 +22,7 @@
     name: ddclient
     image: linuxserver/ddclient
     state: started
+    container_default_behavior: compatibility
     env:
       PUID: "{{ containers_environment.ddclient.PUID }}"
       PGID: "{{ containers_environment.ddclient.PGID }}"

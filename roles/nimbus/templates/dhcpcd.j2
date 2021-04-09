@@ -1,6 +1,0 @@
-# {{ ansible_managed }}
-
-interface eth0
-static ip_address={{ dhcp_config_static_ip }}/24
-static routers={{ dhcp_config_router_ip }}
-static domain_name_servers={{ dhcp_config_dns_ip }}

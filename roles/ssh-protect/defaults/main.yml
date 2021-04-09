@@ -1,0 +1,10 @@
+---
+ssh_protect_config_path: /etc/ssh/sshd_config
+ssh_protect_port: 22
+ssh_protect_password_authentication: "no"
+ssh_protect_permit_root_login: "no"
+ssh_protect_usedns: "no"
+ssh_protect_permit_empty_password: "no"
+ssh_protect_challenge_response_auth: "no"
+ssh_protect_gss_api_authentication: "no"
+ssh_protect_x11_forwarding: "no"

@@ -1,0 +1,46 @@
+---
+# Passwordless privileged users with ssh access with defined keys to be created
+ssh_users:
+  - user: "{{ master_user.username }}"
+    key: "{{ master_user.key }}"
+
+# awesome-motd
+motd_files:
+  - src: 10-hostname-color
+    name: 10-hostname-color
+  - src: 20-sysinfo
+    name: 20-sysinfo
+  - src: 35-diskspace
+    name: 35-diskspace
+  - src: gamma/40-services
+    name: 40-services
+  - src: 60-docker
+    name: 60-docker
+
+# pakages-setup
+packages_update: yes
+setup_packages:
+  - vim
+  - git
+  - htop
+  - ctop
+  - curl
+  - zip
+  - python3
+  - python3-pip
+
+# geerlingguy.docker
+docker_edition: 'ce'
+docker_service_state: started
+docker_service_enabled: true
+docker_install_compose: true
+docker_compose_version: "1.29.0"
+docker_users:
+  - "{{ master_user.username }}"
+
+# dir-skeleton
+skeleton_dirs:
+  - path: /home/{{ master_user.username }}/containers
+    owner: "{{ master_user.username }}"
+    group: "{{ master_user.username }}"
+    mode: "750"

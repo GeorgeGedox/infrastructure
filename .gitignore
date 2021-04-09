@@ -1,1 +1,4 @@
 .vaultfile
+/collections
+/roles/geerlingguy.*
+/roles/oefenweb.*

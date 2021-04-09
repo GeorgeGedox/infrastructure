@@ -1,0 +1,12 @@
+---
+- name: Create skeleton directory
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: directory
+    owner: "{{ item.owner | default(omit) }}"
+    group: "{{ item.group | default(omit) }}"
+    mode: "{{ item.mode | default(omit) | quote }}"
+    recurse: yes
+  loop: "{{ skeleton_dirs }}"
+  loop_control:
+    label: "{{ item.path }}"

@@ -1,0 +1,26 @@
+---
+- name: Harden SSH configuration
+  lineinfile:
+    dest: "{{ ssh_protect_config_path }}"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: present
+    validate: 'sshd -T -f %s'
+    mode: 0644
+  with_items:
+    - regexp: "^PasswordAuthentication"
+      line: "PasswordAuthentication {{ ssh_protect_password_authentication }}"
+    - regexp: "^PermitRootLogin"
+      line: "PermitRootLogin {{ ssh_protect_permit_root_login }}"
+    - regexp: "^Port"
+      line: "Port {{ ssh_protect_port }}"
+    - regexp: "^UseDNS"
+      line: "UseDNS {{ ssh_protect_usedns }}"
+    - regexp: "^PermitEmptyPasswords"
+      line: "PermitEmptyPasswords {{ ssh_protect_permit_empty_password }}"
+    - regexp: "^ChallengeResponseAuthentication"
+      line: "ChallengeResponseAuthentication {{ ssh_protect_challenge_response_auth }}"
+    - regexp: "^GSSAPIAuthentication"
+      line: "GSSAPIAuthentication {{ ssh_protect_gss_api_authentication }}"
+    - regexp: "^X11Forwarding"
+      line: "X11Forwarding {{ ssh_protect_x11_forwarding }}"

@@ -1,0 +1,8 @@
+# Example of use:
+# skeleton_dirs:
+#   - path: /home/data/documents
+#     owner: "jack"
+#     group: "office"
+#     mode: 770
+
+skeleton_dirs: []
