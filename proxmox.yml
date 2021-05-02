@@ -1,0 +1,9 @@
+# Tested on Proxmox 6.4-4
+---
+- hosts: epsilon
+  become: yes
+  tasks:
+    - name: Remove enterprise repo
+      file:
+        path: /etc/apt/sources.list.d/pve-enterprise.list
+        state: absent

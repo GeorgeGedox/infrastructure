@@ -1,0 +1,18 @@
+---
+- name: Install Samba
+  apt:
+    name: samba
+    state: present
+  notify: start samba
+
+- name: Update Samba config
+  template:
+    src: smb.j2
+    dest: /etc/samba/smb.conf
+    owner: root
+    group: root
+  notify: restart samba
+
+# TODO: Add way to also add users
+# adduser -s /sbin/nologin -h /home/samba -H -D user
+# smbpasswd -a user

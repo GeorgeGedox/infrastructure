@@ -1,8 +1,6 @@
 roles:
   - name: geerlingguy.docker
     version: 2.8.1
-  - name: geerlingguy.ntp
-    version: 2.0.1
   - name: oefenweb.fail2ban
     version: v3.3.13
 

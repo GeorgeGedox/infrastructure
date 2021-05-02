@@ -48,6 +48,9 @@ consistency:
 {% endif %}
     prefix: {{ item.name }}-{hostname}
 
+output:
+    color: false
+
 {% if item.hooks is defined %}
 hooks:
     {{ item.hooks | to_nice_yaml(indent=4, width=3000) | indent(width=4) }}

@@ -1,9 +1,4 @@
-# Define this before running
-master_user:
-  username: paradox
-  key: https://github.com/georgegedox.keys
-  timezone: "Europe/Bucharest"
-
+---
 # Elevated group name
 elevated_group_name: empowered
 

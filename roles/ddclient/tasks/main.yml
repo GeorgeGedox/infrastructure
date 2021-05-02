@@ -1,0 +1,27 @@
+---
+- name: Install docker pip module
+  pip:
+    name: docker
+    state: present
+
+- name: Run ddclient container
+  docker_container:
+    name: ddclient
+    image: linuxserver/ddclient
+    state: started
+    container_default_behavior: compatibility
+    env:
+      PUID: "{{ ddclient_PUID }}"
+      PGID: "{{ ddclient_PGID }}"
+      TZ: "{{ ddclient_TZ }}"
+    volumes:
+      - "{{ ddclient_volume }}:/config"
+    restart_policy: unless-stopped
+
+- name: Provision ddclient config file
+  template:
+    src: "ddclient.j2"
+    dest: "{{ ddclient_volume }}/ddclient.conf"
+    owner: "{{ ddclient_user }}"
+    group: "{{ ddclient_group }}"
+  notify: restart ddclient container

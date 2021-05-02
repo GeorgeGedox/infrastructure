@@ -1,0 +1,39 @@
+#######################
+# {{ ansible_managed }}
+#######################
+
+[global]
+	workgroup = WORKGROUP
+	security = user
+	server string = %h server (Samba)
+	hosts allow = 127. 192.168.0.
+	map to guest = Bad User
+	encrypt passwords = yes
+	load printers = no
+	printing = bsd
+	printcap name = /dev/null
+	disable spoolss = yes
+	disable netbios = yes
+	server role = standalone
+	server services = -dns, -nbt
+	smb ports = 445
+
+[private]
+	comment = Private storage
+	path = /mnt/storage/samba/%u
+	writeable = yes
+	browseable = no
+	valid users = %U
+	public = no
+	create mask = 0770
+	directory mask = 0770
+
+[storage]
+	comment = Main storage mount
+	path = /mnt/storage
+	writeable = yes
+	browseable = yes
+	valid users = {{ master_user.username }}
+	public = no
+	create mask = 0770
+	directory mask = 0770

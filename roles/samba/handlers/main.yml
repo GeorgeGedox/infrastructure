@@ -9,9 +9,3 @@
   service:
     name: smbd
     state: restarted
-
-- name: restart ddclient container
-  docker_container:
-    name: ddclient
-    state: started
-    restart: yes

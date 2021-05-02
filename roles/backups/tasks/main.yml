@@ -30,6 +30,8 @@
     group: root
     mode: "0600"
   loop: "{{ borgmatic_configs }}"
+  loop_control:
+    label: "{{ item.name }}"
 
 - name: Setup crontab file
   template:
@@ -48,12 +50,12 @@
     mode: 0644
     content: |
       # Ansible managed
-      {{ backup_log_dir }}/* {
+      {{ backup_log_dir }}/latest.log {
         daily
-        size 10M
-        rotate 3
+        rotate 2
         compress
         dateext
+        notifempty
         copytruncate
         missingok
       }
