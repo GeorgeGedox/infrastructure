@@ -6,6 +6,7 @@
   roles:
     - role: packages-setup
     - role: create-users
+    - role: scrutiny-collector
     - role: ssh-protect
 
 - hosts: apollo

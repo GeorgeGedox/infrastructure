@@ -1,0 +1,4 @@
+---
+scrutiny_collector_version: "0.3.12"
+scrutiny_collector_platform: "linux-amd64"
+scrutiny_collector_api_endpoint: "http://localhost:8080"

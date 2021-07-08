@@ -12,3 +12,8 @@ setup_packages:
   - sudo
   - python3
   - python3-pip
+
+# scrutiny-collector
+scrutiny_collector_version: "0.3.12"
+scrutiny_collector_platform: "linux-amd64"
+scrutiny_collector_api_endpoint: "https://scrutiny.int.georgev.design"

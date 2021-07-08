@@ -95,27 +95,6 @@ borgmatic_configs:
       check_last: 3
     hooks:
       healthchecks: "{{ vault_backups_hc_containers }}"
-  - name: minecraft-server
-    location:
-      source_dirs:
-        - /home/{{ master_user.username }}/containers/minecraft-server
-      repositories:
-        - "{{ valut_rsync_repo }}:epsilon/minecraft-server"
-      exclude_patterns:
-        - /source/containers/minecraft-server/server_data/logs
-        - /source/containers/minecraft-server/server_data/mirage-cache
-      remote_executable: borg1
-      one_fs: true
-    storage:
-      passphrase: "{{ vault_backups_passphrase }}"
-      ssh_command: ssh -i /home/{{ master_user.username }}/.ssh/id_rsa
-    retention:
-      keep_hourly: 48
-      keep_daily: 7
-    consistency:
-      check_last: 3
-    hooks:
-      healthchecks: "{{ vault_backups_hc_minecraft }}"
   - name: nextcloud
     location:
       source_dirs:
