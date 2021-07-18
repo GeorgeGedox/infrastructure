@@ -20,6 +20,9 @@ location:
 {% if item.location.remote_executable is defined %}
     remote_path: {{ item.location.remote_executable }}
 {% endif %}
+{% if item.location.exclude_caches is defined %}
+    exclude_caches: {{ item.location.exclude_caches }}
+{% endif %}
 
 storage:
 {% if item.storage.passphrase is defined %}
@@ -43,6 +46,12 @@ retention:
     {{ item.retention | to_nice_yaml(indent=4, width=2000) | indent(width=4) }}
 
 consistency:
+{% if item.consistency.checks is defined %}
+    checks:
+{% for check in item.consistency.checks %}
+    - {{ check }}
+{% endfor %}
+{% endif %}
 {% if item.consistency.check_last is defined %}
     check_last: {{ item.consistency.check_last }}
 {% endif %}

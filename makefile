@@ -5,10 +5,10 @@ requirements:
 	ansible-galaxy install -r requirements.yml
 
 decrypt:
-	ansible-vault decrypt --vault-password-file .vaultfile vars/vault.yml
+	ansible-vault decrypt vars/vault.yml
 
 encrypt:
-	ansible-vault encrypt --vault-password-file .vaultfile vars/vault.yml
+	ansible-vault encrypt vars/vault.yml
 
 gitinit:
 	@./git-init.sh

@@ -69,46 +69,50 @@ backup_log_dir: /var/log/backups
 backup_log_verbosity: 2
 borgmatic_version: 1.5.12
 backup_setup_cron: yes
-backup_schedule: "0 */6 * * *"
+backup_schedule: "0 */3 * * *"
 borgmatic_configs:
   - name: containers
     location:
       source_dirs:
         - /home/{{ master_user.username }}/containers/main
       repositories:
-        - "{{ valut_rsync_repo }}:epsilon/containers"
+        - "{{ vault_rsync_repo }}:backups/apollo_containers"
       exclude_patterns:
         - /home/{{ master_user.username }}/containers/main/bazarr/cache
         - /home/{{ master_user.username }}/containers/main/jellyfin/cache
         - /home/{{ master_user.username }}/containers/main/jellyfin/.cache
       remote_executable: borg1
-      one_fs: true
-    storage:
-      passphrase: "{{ vault_backups_passphrase }}"
-      compression: lz4
-      umask: 0077
-      ssh_command: ssh -i /home/{{ master_user.username }}/.ssh/id_rsa
-    retention:
-      keep_hourly: 12
-      keep_daily: 5
-    consistency:
-      check_last: 3
-    hooks:
-      healthchecks: "{{ vault_backups_hc_containers }}"
-  - name: nextcloud
-    location:
-      source_dirs:
-        - /mnt/storage/nextcloud
-      repositories:
-        - "{{ valut_rsync_repo }}:epsilon/nextcloud"
-      remote_executable: borg1
+      exclude_caches: true
     storage:
       passphrase: "{{ vault_backups_passphrase }}"
       ssh_command: ssh -i /home/{{ master_user.username }}/.ssh/id_rsa
     retention:
       keep_hourly: 24
-      keep_daily: 5
+      keep_daily: 7
     consistency:
+      checks:
+        - repository
+      check_last: 3
+    hooks:
+      healthchecks: "{{ vault_backup_hc.apollo.docker }}"
+
+  - name: nextcloud
+    location:
+      source_dirs:
+        - /mnt/storage/nextcloud
+      repositories:
+        - "{{ vault_rsync_repo }}:backups/apollo_nextcloud"
+      remote_executable: borg1
+      exclude_caches: true
+    storage:
+      passphrase: "{{ vault_backups_passphrase }}"
+      ssh_command: ssh -i /home/{{ master_user.username }}/.ssh/id_rsa
+    retention:
+      keep_hourly: 12
+      keep_daily: 7
+    consistency:
+      checks:
+        - repository
       check_last: 2
     hooks:
-      healthchecks: "{{ vault_backups_hc_nextcloud }}"
+      healthchecks: "{{ vault_backup_hc.apollo.nextcloud }}"

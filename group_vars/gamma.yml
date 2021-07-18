@@ -65,19 +65,17 @@ borgmatic_configs:
       source_dirs:
         - /home/{{ master_user.username }}/containers/main
       repositories:
-        - "{{ valut_rsync_repo }}:gamma/containers"
+        - "{{ vault_rsync_repo }}:backups/gamma_containers"
       exclude_patterns:
         - /home/{{ master_user.username }}/containers/main/bitwarden/icon_cache
       remote_executable: borg1
-      one_fs: true
+      exclude_caches: true
     storage:
       passphrase: "{{ vault_backups_passphrase }}"
-      compression: lz4
-      umask: 0077
     retention:
       keep_hourly: 12
       keep_daily: 5
     consistency:
-      check_last: 3
+      check_last: 2
     hooks:
-      healthchecks: "{{ vault_backups_hc_gamma_containers }}"
+      healthchecks: "{{ vault_backup_hc.gamma.docker }}"

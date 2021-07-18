@@ -14,14 +14,14 @@
   vars_files:
     - vars/vault.yml
   roles:
-    - role: packages-setup
-    - role: oefenweb.fail2ban
-    - role: create-users
-    - role: geerlingguy.docker
-    - role: storage-setup
-    - role: samba
-    - role: awesome-motd
-    - role: dir-skeleton
+    # - role: packages-setup
+    # - role: oefenweb.fail2ban
+    # - role: create-users
+    # - role: geerlingguy.docker
+    # - role: storage-setup
+    # - role: samba
+    # - role: awesome-motd
+    # - role: dir-skeleton
     - role: backups
 
 - hosts: gamma
@@ -31,10 +31,10 @@
   roles:
     # - role: packages-setup
     # - role: geerlingguy.docker
-    - role: ddclient
+    # - role: ddclient
     # - role: oefenweb.fail2ban
     # - role: create-users
     # - role: awesome-motd
     # - role: dir-skeleton
     # - role: ssh-protect
-    # - role: backups
+    - role: backups
