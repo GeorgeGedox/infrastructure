@@ -29,12 +29,12 @@
   vars_files:
     - vars/vault.yml
   roles:
-    - role: packages-setup
-    - role: geerlingguy.docker
+    # - role: packages-setup
+    # - role: geerlingguy.docker
     - role: ddclient
-    - role: oefenweb.fail2ban
-    - role: create-users
-    - role: awesome-motd
-    - role: dir-skeleton
-    - role: ssh-protect
-    - role: backups
+    # - role: oefenweb.fail2ban
+    # - role: create-users
+    # - role: awesome-motd
+    # - role: dir-skeleton
+    # - role: ssh-protect
+    # - role: backups

@@ -10,6 +10,9 @@
     image: linuxserver/ddclient
     state: started
     container_default_behavior: compatibility
+    dns_servers:
+      - 8.8.8.8
+      - 1.1.1.1
     env:
       PUID: "{{ ddclient_PUID }}"
       PGID: "{{ ddclient_PGID }}"
