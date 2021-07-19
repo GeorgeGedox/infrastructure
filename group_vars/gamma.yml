@@ -56,7 +56,7 @@ ddclient_group: "{{ master_user.username }}"
 # Borgmatic backups
 backup_log_dir: /var/log/backups
 backup_log_verbosity: 2
-borgmatic_version: 1.5.12
+borgmatic_version: 1.5.15
 backup_setup_cron: yes
 backup_schedule: "0 */3 * * *"
 borgmatic_configs:
