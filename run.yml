@@ -15,6 +15,7 @@
     - vars/vault.yml
   roles:
     # - role: packages-setup
+    - role: sysctl_props
     # - role: oefenweb.fail2ban
     # - role: create-users
     # - role: geerlingguy.docker
@@ -22,7 +23,7 @@
     # - role: samba
     # - role: awesome-motd
     # - role: dir-skeleton
-    - role: backups
+    # - role: backups
 
 - hosts: gamma
   become: yes
@@ -30,6 +31,7 @@
     - vars/vault.yml
   roles:
     # - role: packages-setup
+    - role: sysctl_props
     # - role: geerlingguy.docker
     # - role: ddclient
     # - role: oefenweb.fail2ban
@@ -37,4 +39,4 @@
     # - role: awesome-motd
     # - role: dir-skeleton
     # - role: ssh-protect
-    - role: backups
+    # - role: backups

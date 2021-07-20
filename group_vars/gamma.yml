@@ -17,6 +17,9 @@ motd_files:
   - src: 60-docker
     name: 60-docker
 
+# sysctl_props
+inotify_max_user_watches: 524288
+
 # pakages-setup
 packages_update: yes
 setup_packages:

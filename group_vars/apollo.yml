@@ -4,6 +4,9 @@ ssh_users:
   - user: "{{ master_user.username }}"
     key: "{{ master_user.key }}"
 
+# sysctl_props
+inotify_max_user_watches: 524288
+
 # Packages to be installed during setup
 packages_update: yes # Update packages each time
 setup_packages:
