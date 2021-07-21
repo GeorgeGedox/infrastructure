@@ -20,6 +20,10 @@ motd_files:
 # sysctl_props
 inotify_max_user_watches: 524288
 
+# cloudalchemy.node_exporter
+node_exporter_version: 1.2.0
+node_exporter_web_listen_address: "127.0.0.1:9100"
+
 # pakages-setup
 packages_update: yes
 setup_packages:

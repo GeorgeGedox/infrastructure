@@ -4,10 +4,11 @@
   vars_files:
     - vars/vault.yml
   roles:
-    - role: packages-setup
-    - role: create-users
-    - role: scrutiny-collector
-    - role: ssh-protect
+    # - role: packages-setup
+    # - role: create-users
+    # - role: scrutiny-collector
+    - role: cloudalchemy.node_exporter
+    # - role: ssh-protect
 
 - hosts: apollo
   become: yes
@@ -15,7 +16,7 @@
     - vars/vault.yml
   roles:
     # - role: packages-setup
-    - role: sysctl_props
+    # - role: sysctl_props
     # - role: oefenweb.fail2ban
     # - role: create-users
     # - role: geerlingguy.docker
@@ -23,6 +24,7 @@
     # - role: samba
     # - role: awesome-motd
     # - role: dir-skeleton
+    - role: cloudalchemy.node_exporter
     # - role: backups
 
 - hosts: gamma
@@ -31,12 +33,13 @@
     - vars/vault.yml
   roles:
     # - role: packages-setup
-    - role: sysctl_props
+    # - role: sysctl_props
     # - role: geerlingguy.docker
     # - role: ddclient
     # - role: oefenweb.fail2ban
     # - role: create-users
     # - role: awesome-motd
     # - role: dir-skeleton
+    - role: cloudalchemy.node_exporter
     # - role: ssh-protect
     # - role: backups

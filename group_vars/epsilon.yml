@@ -17,3 +17,6 @@ setup_packages:
 scrutiny_collector_version: "0.3.12"
 scrutiny_collector_platform: "linux-amd64"
 scrutiny_collector_api_endpoint: "https://scrutiny.int.georgev.design"
+
+# cloudalchemy.node_exporter
+node_exporter_version: 1.2.0
