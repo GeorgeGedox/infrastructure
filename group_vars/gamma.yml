@@ -40,6 +40,13 @@ promtail_config_scrape_configs:
           host: gamma
           agent: promtail
           __path__: /var/log/*log
+      - targets:
+          - localhost
+        labels:
+          job: backups
+          host: gamma
+          agent: promtail
+          __path__: /var/log/backups/latest.log
 
 # pakages-setup
 packages_update: yes

@@ -52,6 +52,13 @@ promtail_config_scrape_configs:
           host: apollo
           agent: promtail
           __path__: /var/log/*log
+      - targets:
+          - localhost
+        labels:
+          job: backups
+          host: apollo
+          agent: promtail
+          __path__: /var/log/backups/latest.log
 
 # geerlingguy.docker
 docker_edition: 'ce'
