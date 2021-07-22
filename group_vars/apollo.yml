@@ -37,6 +37,22 @@ motd_files:
 # cloudalchemy.node_exporter
 node_exporter_version: 1.2.0
 
+#patrickjahns.promtail
+promtail_version: 2.2.1
+promtail_system_user: root
+promtail_user_additional_groups: ""
+promtail_loki_server_url: https://loki.int.georgev.design
+promtail_config_scrape_configs:
+  - job_name: system
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: varlogs
+          host: apollo
+          agent: promtail
+          __path__: /var/log/*log
+
 # geerlingguy.docker
 docker_edition: 'ce'
 docker_service_state: started

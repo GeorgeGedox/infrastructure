@@ -7,7 +7,8 @@
     # - role: packages-setup
     # - role: create-users
     # - role: scrutiny-collector
-    - role: cloudalchemy.node_exporter
+    # - role: cloudalchemy.node_exporter
+    - role: patrickjahns.promtail
     # - role: ssh-protect
 
 - hosts: apollo
@@ -24,7 +25,8 @@
     # - role: samba
     # - role: awesome-motd
     # - role: dir-skeleton
-    - role: cloudalchemy.node_exporter
+    # - role: cloudalchemy.node_exporter
+    - role: patrickjahns.promtail
     # - role: backups
 
 - hosts: gamma
@@ -40,6 +42,7 @@
     # - role: create-users
     # - role: awesome-motd
     # - role: dir-skeleton
-    - role: cloudalchemy.node_exporter
+    # - role: cloudalchemy.node_exporter
+    - role: patrickjahns.promtail
     # - role: ssh-protect
     # - role: backups

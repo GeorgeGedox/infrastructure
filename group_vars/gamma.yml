@@ -22,6 +22,24 @@ inotify_max_user_watches: 524288
 
 # cloudalchemy.node_exporter
 node_exporter_version: 1.2.0
+node_exporter_disabled_collectors:
+  - nvme
+
+#patrickjahns.promtail
+promtail_version: 2.2.1
+promtail_system_user: root
+promtail_user_additional_groups: ""
+promtail_loki_server_url: https://loki.int.georgev.design
+promtail_config_scrape_configs:
+  - job_name: system
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: varlogs
+          host: gamma
+          agent: promtail
+          __path__: /var/log/*log
 
 # pakages-setup
 packages_update: yes
@@ -36,7 +54,7 @@ setup_packages:
   - python3-pip
 
 # geerlingguy.docker
-docker_edition: 'ce'
+docker_edition: "ce"
 docker_service_state: started
 docker_service_enabled: true
 docker_install_compose: true

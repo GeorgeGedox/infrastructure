@@ -5,6 +5,8 @@ roles:
     version: v3.3.13
   - name: cloudalchemy.node_exporter
     version: 1.0.0
+  - name: patrickjahns.promtail
+    version: 1.11.0
 
 collections:
   - name: ansible.posix

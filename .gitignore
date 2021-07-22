@@ -3,6 +3,7 @@
 /roles/geerlingguy.*
 /roles/oefenweb.*
 /roles/cloudalchemy.*
+/roles/patrickjahns.*
 
 # Virtualenv
 /lib
