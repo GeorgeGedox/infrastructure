@@ -1,0 +1,4 @@
+# {{ ansible_managed }}
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+{{ textfile_collector_cron }} root python3 {{ textfile_collector_scripts_directory_path }}/smartmon.py | sponge {{ textfile_collector_output_directory_path }}/smartmon.prom

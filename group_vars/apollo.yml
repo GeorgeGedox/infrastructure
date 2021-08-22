@@ -8,7 +8,7 @@ ssh_users:
 inotify_max_user_watches: 524288
 
 # Packages to be installed during setup
-packages_update: yes # Update packages each time
+packages_update: yes
 setup_packages:
   - vim
   - git
@@ -36,6 +36,8 @@ motd_files:
 
 # cloudalchemy.node_exporter
 node_exporter_version: 1.2.0
+node_exporter_disabled_collectors:
+  - nvme
 
 #patrickjahns.promtail
 promtail_version: 2.2.1

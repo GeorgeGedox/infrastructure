@@ -4,45 +4,46 @@
   vars_files:
     - vars/vault.yml
   roles:
-    # - role: packages-setup
-    # - role: create-users
-    # - role: scrutiny-collector
-    # - role: cloudalchemy.node_exporter
+    - role: packages-setup
+    - role: create-users
+    - role: cloudalchemy.node_exporter
+    - role: textfile-collector-setup
     - role: patrickjahns.promtail
-    # - role: ssh-protect
+    - role: ssh-protect
 
 - hosts: apollo
   become: yes
   vars_files:
     - vars/vault.yml
   roles:
-    # - role: packages-setup
-    # - role: sysctl_props
-    # - role: oefenweb.fail2ban
-    # - role: create-users
-    # - role: geerlingguy.docker
-    # - role: storage-setup
-    # - role: samba
-    # - role: awesome-motd
-    # - role: dir-skeleton
-    # - role: cloudalchemy.node_exporter
+    - role: packages-setup
+    - role: sysctl_props
+    - role: oefenweb.fail2ban
+    - role: create-users
+    - role: geerlingguy.docker
+    - role: storage-setup
+    - role: samba
+    - role: awesome-motd
+    - role: dir-skeleton
+    - role: cloudalchemy.node_exporter
     - role: patrickjahns.promtail
-    # - role: backups
+    - role: backups
 
 - hosts: gamma
   become: yes
   vars_files:
     - vars/vault.yml
   roles:
-    # - role: packages-setup
-    # - role: sysctl_props
-    # - role: geerlingguy.docker
-    # - role: ddclient
-    # - role: oefenweb.fail2ban
-    # - role: create-users
-    # - role: awesome-motd
-    # - role: dir-skeleton
-    # - role: cloudalchemy.node_exporter
+    - role: packages-setup
+    - role: sysctl_props
+    - role: geerlingguy.docker
+    - role: ddclient
+    - role: oefenweb.fail2ban
+    - role: create-users
+    - role: awesome-motd
+    - role: dir-skeleton
+    - role: cloudalchemy.node_exporter
+    - role: textfile-collector-setup
     - role: patrickjahns.promtail
-    # - role: ssh-protect
-    # - role: backups
+    - role: ssh-protect
+    - role: backups

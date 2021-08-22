@@ -1,9 +1,9 @@
 ---
 - name: Update all packages
   apt:
-    update_cache: yes
+    update_cache: true
     upgrade: safe
-    autoremove: yes
+    autoremove: true
   when: packages_update
 
 - name: Install specified packages

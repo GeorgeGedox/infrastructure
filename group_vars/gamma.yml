@@ -25,6 +25,11 @@ node_exporter_version: 1.2.0
 node_exporter_disabled_collectors:
   - nvme
 
+# textfile-collector
+textfile_collector_scripts_directory_path: /opt/textfile_collector
+textfile_collector_output_directory_path: /var/lib/node_exporter
+textfile_collector_cron: "*/5 * * * *"
+
 #patrickjahns.promtail
 promtail_version: 2.2.1
 promtail_system_user: root

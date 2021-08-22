@@ -1,0 +1,27 @@
+---
+- name: Install dependencies
+  apt:
+    name: moreutils
+    update_cache: true
+    state: present
+
+- name: Create scripts directory
+  ansible.builtin.file:
+    path: "{{ textfile_collector_scripts_directory_path }}"
+    state: directory
+    mode: "0755"
+
+- name: Copy scripts to server
+  ansible.builtin.copy:
+    src: "{{ item.src }}"
+    dest: "{{ textfile_collector_scripts_directory_path }}/{{ item.name }}"
+    mode: "0700"
+  loop: "{{ textfile_collector_scripts }}"
+
+- name: Setup crontab file
+  template:
+    src: cronjob.j2
+    dest: /etc/cron.d/textfile_collector
+    owner: root
+    group: root
+    mode: 0644

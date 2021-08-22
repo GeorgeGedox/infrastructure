@@ -1,0 +1,7 @@
+---
+textfile_collector_scripts_directory_path: /opt/textfile_collector
+textfile_collector_output_directory_path: /var/lib/node_exporter
+textfile_collector_cron: "*/5 * * * *"
+textfile_collector_scripts:
+  - src: smartmon.py
+    name: smartmon.py
