@@ -1,9 +1,4 @@
 ---
-# Passwordless privileged users with ssh access with defined keys to be created
-ssh_users:
-  - user: "{{ master_user.username }}"
-    key: "{{ master_user.key }}"
-
 # awesome-motd
 motd_files:
   - src: 10-hostname-color
@@ -73,6 +68,8 @@ docker_install_compose: true
 docker_compose_version: "1.29.0"
 docker_users:
   - "{{ master_user.username }}"
+docker_daemon_options:
+  dns: [8.8.4.4, 8.8.8.8]
 
 # dir-skeleton
 skeleton_dirs:

@@ -1,5 +1,5 @@
 ---
-- name: Create /mnt points
+- name: Create mount points
   file:
     path: "{{ item.path }}"
     state: directory
@@ -22,21 +22,19 @@
     name: mergerfs
     state: present
 
-- name: Create /mnt points for MergerFS
+- name: Create mount point for MergerFS
   file:
-    path: "{{ item.dest }}"
+    path: "{{ mergerfs_mount.dest }}"
     state: directory
     owner: nobody
     group: nogroup
     mode: "777"
-  loop: "{{ mergerfs_mounts }}"
 
-- name: Mount MergerFS array
+- name: Mount MergerFS
   mount:
-    path: "{{ item.dest }}"
-    src: "{{ item.src }}"
-    fstype: "{{ item.fs }}"
-    opts: "{{ item.opts }}"
+    path: "{{ mergerfs_mount.dest }}"
+    src: "{{ mergerfs_mount.src }}"
+    fstype: "{{ mergerfs_mount.fs }}"
+    opts: "{{ mergerfs_mount.opts }}"
     state: present
-  loop: "{{ mergerfs_mounts }}"
   

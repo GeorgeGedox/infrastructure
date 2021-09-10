@@ -1,6 +1,9 @@
 ---
-# Elevated group name
+# ssh_users with sudo access
 elevated_group_name: empowered
+ssh_users:
+  - user: "{{ master_user.username }}"
+    key: "{{ master_user.key }}"
 
 # oefenweb.fail2ban
 fail2ban_ignoreips:

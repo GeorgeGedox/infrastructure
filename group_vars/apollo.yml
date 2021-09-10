@@ -1,9 +1,4 @@
 ---
-# Passwordless privileged users with ssh access with defined keys to be created
-ssh_users:
-  - user: "{{ master_user.username }}"
-    key: "{{ master_user.key }}"
-
 # sysctl_props
 inotify_max_user_watches: 524288
 
@@ -15,11 +10,10 @@ setup_packages:
   - htop
   - curl
   - zip
-  - tmux
-  - hddtemp
-  - smartmontools
   - python3
   - python3-pip
+  - smartmontools
+  - nfs-common
 
 # awesome-motd
 motd_files:
@@ -38,6 +32,11 @@ motd_files:
 node_exporter_version: 1.2.0
 node_exporter_disabled_collectors:
   - nvme
+
+# textfile-collector
+textfile_collector_scripts_directory_path: /opt/textfile_collector
+textfile_collector_output_directory_path: /var/lib/node_exporter
+textfile_collector_cron: "*/5 * * * *"
 
 #patrickjahns.promtail
 promtail_version: 2.2.1
@@ -70,30 +69,102 @@ docker_install_compose: true
 docker_compose_version: "1.29.0"
 docker_users:
   - "{{ master_user.username }}"
-
-# dir-skeleton
-skeleton_dirs:
-  - path: /home/{{ master_user.username }}/containers
-    owner: "{{ master_user.username }}"
-    group: "{{ master_user.username }}"
-    mode: "750"
+docker_daemon_options:
+  dns: [8.8.4.4, 8.8.8.8]
 
 # Storage setup
 data_disks:
   - path: /mnt/disk1
-    id: '/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi2'
+    id: '/dev/disk/by-id/scsi-SATA_ST8000NE001-2M71_WSD3F54Z'
     fs: ext4
     opts: defaults
-  - path: /mnt/disk2
-    id: '/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_drive-scsi1'
+  - path: /mnt/parity1
+    id: '/dev/disk/by-id/scsi-SATA_WDC_WD101EFAX-68_VCG71VVN'
     fs: ext4
     opts: defaults
 
-mergerfs_mounts:
-  - src: "/mnt/disk*"
-    dest: "/mnt/storage"
-    fs: fuse.mergerfs
-    opts: "defaults,nonempty,allow_other,use_ino,cache.files=off,moveonenospc=true,dropcacheonclose=true,minfreespace=100G,fsname=mergerfs"
+mergerfs_mount:
+  src: "/mnt/disk*"
+  dest: "/mnt/storage"
+  fs: fuse.mergerfs
+  opts: "defaults,nonempty,allow_other,use_ino,cache.files=partial,moveonenospc=true,category.create=mfs,dropcacheonclose=true,minfreespace=250G,fsname=mergerfs"
+
+# Snapraid
+snapraid_install: true
+snapraid_runner: true
+
+snapraid_apt_package_name: snapraid
+snapraid_bin_path: /usr/local/bin/snapraid
+snapraid_force_install: false
+
+snapraid_runner_healthcheck_io_uuid: "{{ vault_snapraid_hc_uuid }}"
+
+snapraid_content_files:
+  - /var/snapraid.content
+
+snapraid_config_excludes:
+  - "*.unrecoverable"
+  - "/tmp/"
+  - "/lost+found/"
+  - "*.!sync"
+  - ".AppleDouble"
+  - "._AppleDouble"
+  - ".DS_Store"
+  - "._.DS_Store"
+  - ".Thumbs.db"
+  - ".fseventsd"
+  - ".Spotlight-V100"
+  - ".TemporaryItems"
+  - ".Trashes"
+  - ".AppleDB"
+  - "/media/downloads/"
+
+snapraid_parity_disks:
+  - path: /mnt/parity1
+    content: false
+
+snapraid_data_disks:
+  - path: /mnt/disk1
+    content: true
+
+snapraid_runner_path: /opt/snapraid-runner/snapraid-runner
+snapraid_runner_command: "python3 {{ snapraid_runner_bin }} -c {{ snapraid_runner_conf }} {% if snapraid_runner_healthcheck_io_uuid %}| curl -fsS -m 10 --retry 5 -o /dev/null --data-binary '@-' {{ snapraid_healthcheck_io_host }}/{{ snapraid_runner_healthcheck_io_uuid }} > /dev/null{% endif %}"
+
+snapraid_runner_scrub: true
+snapraid_scrub_percent: 15
+snapraid_scrub_age: 7
+snapraid_runner_touch: true
+snapraid_runner_delete_threshold: 250
+
+snapraid_runner_cron_jobs:
+  - { job: '{{ snapraid_runner_command }}', name: 'snapraid_runner', weekday: '*', hour: '02' }
+
+# dir_sekelton
+skeleton_dirs:
+  - path: /mnt/storage/media/blackhole
+    owner: "{{ master_user.username }}"
+    group: "{{ master_user.username }}"
+  - path: /mnt/storage/media/downloads/complete
+    owner: "{{ master_user.username }}"
+    group: "{{ master_user.username }}"
+  - path: /mnt/storage/media/downloads/incomplete
+    owner: "{{ master_user.username }}"
+    group: "{{ master_user.username }}"
+  - path: /mnt/storage/media/music
+    owner: "{{ master_user.username }}"
+    group: "{{ master_user.username }}"
+  - path: /mnt/storage/media/podcasts
+    owner: "{{ master_user.username }}"
+    group: "{{ master_user.username }}"
+  - path: /mnt/storage/media/shows
+    owner: "{{ master_user.username }}"
+    group: "{{ master_user.username }}"
+  - path: /mnt/storage/media/anime
+    owner: "{{ master_user.username }}"
+    group: "{{ master_user.username }}"
+  - path: /mnt/storage/media/movies
+    owner: "{{ master_user.username }}"
+    group: "{{ master_user.username }}"
 
 # Borgmatic backups
 backup_log_dir: /var/log/backups
@@ -105,18 +176,17 @@ borgmatic_configs:
   - name: containers
     location:
       source_dirs:
-        - /home/{{ master_user.username }}/containers/main
+        - /mnt/tank/appdata/apollo_docker
       repositories:
         - "{{ vault_rsync_repo }}:backups/apollo_containers"
       exclude_patterns:
-        - /home/{{ master_user.username }}/containers/main/bazarr/cache
-        - /home/{{ master_user.username }}/containers/main/jellyfin/cache
-        - /home/{{ master_user.username }}/containers/main/jellyfin/.cache
+        - /mnt/tank/appdata/apollo_docker/bazarr/cache
+        - /mnt/tank/appdata/apollo_docker/jellyfin/cache
+        - /mnt/tank/appdata/apollo_docker/jellyfin/.cache
       remote_executable: borg1
       exclude_caches: true
     storage:
       passphrase: "{{ vault_backups_passphrase }}"
-      ssh_command: ssh -i /home/{{ master_user.username }}/.ssh/id_rsa
     retention:
       keep_hourly: 24
       keep_daily: 7
@@ -130,20 +200,19 @@ borgmatic_configs:
   - name: nextcloud
     location:
       source_dirs:
-        - /mnt/storage/nextcloud
+        - /mnt/tank/nextcloud
       repositories:
         - "{{ vault_rsync_repo }}:backups/apollo_nextcloud"
       remote_executable: borg1
       exclude_caches: true
     storage:
       passphrase: "{{ vault_backups_passphrase }}"
-      ssh_command: ssh -i /home/{{ master_user.username }}/.ssh/id_rsa
     retention:
       keep_hourly: 12
       keep_daily: 7
     consistency:
       checks:
         - repository
-      check_last: 2
+      check_last: 3
     hooks:
       healthchecks: "{{ vault_backup_hc.apollo.nextcloud }}"

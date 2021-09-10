@@ -10,9 +10,9 @@
       lineinfile:
         path: /etc/sudoers
         state: present
-        regexp: '^%{{ elevated_group_name }}'
-        line: '%{{ elevated_group_name }} ALL=(ALL) NOPASSWD: ALL'
-        validate: '/usr/sbin/visudo -cf %s'
+        regexp: "^%{{ elevated_group_name }}"
+        line: "%{{ elevated_group_name }} ALL=(ALL) NOPASSWD: ALL"
+        validate: "/usr/sbin/visudo -cf %s"
 
     - name: Create users and add them to the elevated group
       user:

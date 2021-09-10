@@ -1,6 +1,6 @@
 roles:
   - name: geerlingguy.docker
-    version: 2.8.1
+    version: 4.1.0
   - name: oefenweb.fail2ban
     version: v3.3.13
   - name: cloudalchemy.node_exporter

@@ -1,0 +1,31 @@
+---
+- name: Create resolved.conf.d directory
+  ansible.builtin.file:
+    path: /etc/systemd/resolved.conf.d
+    state: directory
+    owner: root
+    group: root
+    recurse: yes
+
+- name: Place configuration for adguard
+  copy:
+    src: adguard.conf
+    dest: /etc/systemd/resolved.conf.d/adguard.conf
+    mode: "0644"
+
+- name: Create copy of resolv.conf file
+  ansible.builtin.copy:
+    src: /etc/resolv.conf
+    dest: /etc/resolv.conf.bak
+    remote_src: yes
+
+- name: Symlink resolv.conf to /run/systemd/resolve/resolv.conf
+  ansible.builtin.file:
+    src: /run/systemd/resolve/resolv.conf
+    dest: /etc/resolv.conf
+    state: link
+
+- name: Restart resolved
+  ansible.builtin.systemd:
+    state: restarted
+    name: systemd-resolved

@@ -1,9 +1,4 @@
 ---
-# SSH Users
-ssh_users:
-  - user: "{{ master_user.username }}"
-    key: "{{ master_user.key }}"
-
 # Packages
 setup_packages:
   - vim

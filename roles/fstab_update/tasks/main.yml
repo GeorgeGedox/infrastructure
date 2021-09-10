@@ -1,0 +1,17 @@
+- name: Create mount point directories
+  file:
+    path: "{{ item.dest }}"
+    state: directory
+    owner: nobody
+    group: nogroup
+    mode: "777"
+  loop: "{{ fstab_mounts }}"
+
+- name: Update fstab
+  mount:
+    path: "{{ item.dest }}"
+    src: "{{ item.src }}"
+    fstype: "{{ item.fs }}"
+    opts: "{{ item.opts }}"
+    state: present
+  loop: "{{ fstab_mounts }}"

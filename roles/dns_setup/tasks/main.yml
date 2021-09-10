@@ -1,0 +1,21 @@
+---
+- name: Install resolvconf
+  apt:
+    name: resolvconf
+    state: present
+    update_cache: true
+
+- name: Enable resolvconf service
+  ansible.builtin.systemd:
+    state: started
+    enabled: true
+    name: resolvconf
+
+- name: Update config
+  copy:
+    src: head
+    dest: /etc/resolvconf/resolv.conf.d/head
+    mode: "0644"
+
+- name: Update resolv.conf
+  shell: "resolvconf -u"
