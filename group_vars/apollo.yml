@@ -182,6 +182,7 @@ borgmatic_configs:
       exclude_patterns:
         - /mnt/tank/appdata/apollo_docker/bazarr/cache
         - /mnt/tank/appdata/apollo_docker/jellyfin/cache
+        - /mnt/tank/appdata/apollo_docker/jellyfin/data/transcodes
         - /mnt/tank/appdata/apollo_docker/jellyfin/.cache
       remote_executable: borg1
       exclude_caches: true
