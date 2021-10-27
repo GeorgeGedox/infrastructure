@@ -2,11 +2,11 @@
 - name: Install dependencies
   apt:
     name:
-       - figlet
-       - lolcat
-       - hddtemp
+      - figlet
+      - lolcat
+      - hddtemp
     state: present
-  become: yes
+  become: true
   tags: awesome-motd
 
 - name: Check if motd scripts were provisioned before
@@ -26,21 +26,21 @@
       file:
         path: /etc/update-motd.d
         state: directory
-        mode: "755"
+        mode: '755'
 
     - name: Copy motd files
       copy:
-        src: "{{ item.src }}"
-        dest: "/etc/update-motd.d/{{ item.name }}"
-        mode: "755"
-      loop: "{{ motd_files }}"
+        src: '{{ item.src }}'
+        dest: /etc/update-motd.d/{{ item.name }}
+        mode: '755'
+      loop: '{{ motd_files }}'
 
     - name: Add .ansible file for future provisions
       copy:
         dest: /etc/update-motd.d/.ansible
-        content: ""
-        force: no
-        mode: "644"
-  become: yes
+        content: ''
+        force: false
+        mode: '644'
+  become: true
   when: not motd_lock.stat.exists
   tags: awesome-motd

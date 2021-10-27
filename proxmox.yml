@@ -1,7 +1,7 @@
-# Tested on Proxmox 6.4-4
 ---
+# Tested on Proxmox 6.4-4
 - hosts: epsilon
-  become: yes
+  become: true
   tasks:
     - name: Remove enterprise repo
       file:

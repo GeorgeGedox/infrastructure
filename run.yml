@@ -1,6 +1,6 @@
 ---
 - hosts: epsilon
-  become: yes
+  become: true
   vars_files:
     - vars/vault.yml
   roles:
@@ -9,7 +9,7 @@
     - role: patrickjahns.promtail
 
 - hosts: apollo
-  become: yes
+  become: true
   vars_files:
     - vars/vault.yml
   roles:
@@ -28,7 +28,7 @@
     - role: backups
 
 - hosts: gamma
-  become: yes
+  become: true
   vars_files:
     - vars/vault.yml
   roles:
