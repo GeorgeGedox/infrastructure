@@ -7,13 +7,6 @@ root = true
 [*]
 insert_final_newline = true
 indent_style = space
-indent_size = 4
-trim_trailing_whitespace = true
-
-# Files with a smaller indent
-[*.yml]
 indent_size = 2
-
-# Jinja2 template files
-[*.j2]
+trim_trailing_whitespace = true
 end_of_line = lf

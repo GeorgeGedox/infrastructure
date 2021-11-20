@@ -8,7 +8,7 @@
     recurse: yes
 
 - name: Place configuration for adguard
-  copy:
+  ansible.builtin.copy:
     src: adguard.conf
     dest: /etc/systemd/resolved.conf.d/adguard.conf
     mode: "0644"

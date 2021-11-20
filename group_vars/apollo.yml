@@ -91,8 +91,6 @@ docker_install_compose: true
 docker_compose_version: "1.29.0"
 docker_users:
   - "{{ master_user.username }}"
-docker_daemon_options:
-  dns: [8.8.4.4, 8.8.8.8]
 
 # Storage setup
 data_disks:
@@ -162,31 +160,19 @@ snapraid_runner_cron_jobs:
   - { job: '{{ snapraid_runner_command }}', name: 'snapraid_runner', weekday: '*', hour: '02' }
 
 # dir_skeleton
+skeleton_default_owner: "{{ master_user.username }}"
+skeleton_default_group: "{{ master_user.username }}"
 skeleton_dirs:
+  - path: /mnt/storage/media
+    recurse: true
   - path: /mnt/storage/media/blackhole
-    owner: "{{ master_user.username }}"
-    group: "{{ master_user.username }}"
   - path: /mnt/storage/media/downloads/complete
-    owner: "{{ master_user.username }}"
-    group: "{{ master_user.username }}"
   - path: /mnt/storage/media/downloads/incomplete
-    owner: "{{ master_user.username }}"
-    group: "{{ master_user.username }}"
   - path: /mnt/storage/media/music
-    owner: "{{ master_user.username }}"
-    group: "{{ master_user.username }}"
   - path: /mnt/storage/media/podcasts
-    owner: "{{ master_user.username }}"
-    group: "{{ master_user.username }}"
   - path: /mnt/storage/media/shows
-    owner: "{{ master_user.username }}"
-    group: "{{ master_user.username }}"
   - path: /mnt/storage/media/anime
-    owner: "{{ master_user.username }}"
-    group: "{{ master_user.username }}"
   - path: /mnt/storage/media/movies
-    owner: "{{ master_user.username }}"
-    group: "{{ master_user.username }}"
 
 # Borgmatic backups
 backup_log_dir: /var/log/backups

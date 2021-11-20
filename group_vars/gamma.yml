@@ -90,15 +90,13 @@ docker_install_compose: true
 docker_compose_version: "1.29.0"
 docker_users:
   - "{{ master_user.username }}"
-docker_daemon_options:
-  dns: [8.8.4.4, 8.8.8.8]
 
 # dir-skeleton
+skeleton_default_owner: "{{ master_user.username }}"
+skeleton_default_group: "{{ master_user.username }}"
 skeleton_dirs:
   - path: /home/{{ master_user.username }}/containers
-    owner: "{{ master_user.username }}"
-    group: "{{ master_user.username }}"
-    mode: "750"
+  - path: /home/{{ master_user.username }}/containers/managed
 
 # ddclient
 ddclient_PUID: "1000"

@@ -1,6 +1,0 @@
----
-# This installs nvidia drivers with docker support
-- hosts: all
-  become: true
-  roles:
-    - role: gpu_support

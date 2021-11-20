@@ -37,4 +37,3 @@
     fstype: "{{ mergerfs_mount.fs }}"
     opts: "{{ mergerfs_mount.opts }}"
     state: present
-  

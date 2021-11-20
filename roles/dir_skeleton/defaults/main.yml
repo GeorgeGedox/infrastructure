@@ -6,3 +6,5 @@
 #     mode: 770
 
 skeleton_dirs: []
+skeleton_default_owner: root
+skeleton_default_group: root

@@ -17,5 +17,5 @@
     dest: /etc/resolvconf/resolv.conf.d/head
     mode: "0644"
 
-- name: Update resolv.conf
+- name: Reload resolv config
   ansible.builtin.command: "resolvconf -u"

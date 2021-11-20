@@ -1,7 +1,7 @@
 ---
-- name: Install specified packages
+- name: Install wanted packages
   ansible.builtin.apt:
-    name: "{{ item }}"
+    name: "{{ setup_packages }}"
     update_cache: true
     state: present
-  loop: "{{ setup_packages }}"
+  when: setup_packages | length > 0

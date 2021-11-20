@@ -1,17 +1,25 @@
 ---
-- name: Install Samba
+- name: Install SMB
   apt:
     name: samba
     state: present
-  notify: start samba
 
-- name: Update Samba config
+- name: Update SMB config
   template:
     src: smb.j2
     dest: /etc/samba/smb.conf
     owner: root
     group: root
-  notify: restart samba
+
+- name: Restart and enable SMB
+  service:
+    name: smbd
+    enabled: yes
+    state: started
+
+- name: Show reminder
+  debug:
+    msg: "Don't forget to also create the users and run smbpasswd"
 
 # TODO: Add way to also add users
 # adduser -s /sbin/nologin -h /home/samba -H -D user

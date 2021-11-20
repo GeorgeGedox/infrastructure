@@ -1,80 +1,60 @@
 ---
-- hosts: epsilon
+- hosts: all
   become: true
   vars_files:
     - vars/vault.yml
   roles:
     - role: packages_setup
       tags: packages
-    - role: cloudalchemy.node_exporter
+    - role: node_exporter
       tags: node_exporter
     - role: patrickjahns.promtail
       tags: promtail
+
+- hosts: ubuntu
+  become: true
+  vars_files:
+    - vars/vault.yml
+  roles:
+    - role: snapbegone
+      tags: snap
+    - role: geerlingguy.swap
+      tags: swap
+    - role: dns_setup
+      tags: dns
+    - role: netplan
+      tags: netplan
+    - role: geerlingguy.docker
+      tags: docker
+    - role: dir_skeleton
+      tags: skeleton
+    - role: awesome_motd
+      tags: motd
+    - role: textfile_collector
+      tags: textfile_collector
+    - role: adguardhome_prep
+      tags: adguard_prep
+    - role: backups
+      tags: backups
 
 - hosts: apollo
   become: true
   vars_files:
     - vars/vault.yml
   roles:
-    - role: packages_setup
-      tags: packages
-    - role: geerlingguy.swap
-      tags: swap
-    - role: dns_setup
-      tags: dns
-    - role: netplan
-      tags: netplan
-    - role: geerlingguy.docker
-      tags: docker
+    - role: nvidia_gpu
+      tags: gpu
     - role: storage_setup
       tags: storage
     - role: snapraid
       tags: snapraid
     - role: samba
       tags: samba
-    - role: dir_skeleton
-      tags: skeleton
-    - role: awesome_motd
-      tags: motd
-    - role: cloudalchemy.node_exporter
-      tags: node_exporter
-    - role: patrickjahns.promtail
-      tags: promtail
-    - role: textfile_collector
-      tags: textfile_collector
-    - role: adguardhome_prep
-      tags: adguard_prep
-    - role: backups
-      tags: backups
 
 - hosts: gamma
   become: true
   vars_files:
     - vars/vault.yml
   roles:
-    - role: packages_setup
-      tags: packages
-    - role: geerlingguy.swap
-      tags: swap
-    - role: dns_setup
-      tags: dns
-    - role: netplan
-      tags: netplan
-    - role: geerlingguy.docker
-      tags: docker
     - role: ddclient
       tags: ddclient
-    - role: dir_skeleton
-      tags: skeleton
-    - role: awesome_motd
-      tags: motd
-    - role: cloudalchemy.node_exporter
-      tags: node_exporter
-    - role: patrickjahns.promtail
-      tags: promtail
-    - role: textfile_collector
-      tags: textfile_collector
-    - role: adguardhome_prep
-      tags: adguard_prep
-    - role: backups
-      tags: backups

@@ -1,6 +1,6 @@
 ---
 - name: Install dependencies
-  apt:
+  ansible.builtin.apt:
     name: moreutils
     update_cache: true
     state: present
@@ -19,7 +19,7 @@
   loop: "{{ textfile_collector_scripts }}"
 
 - name: Setup crontab file
-  template:
+  ansible.builtin.template:
     src: cronjob.j2
     dest: /etc/cron.d/textfile_collector
     owner: root

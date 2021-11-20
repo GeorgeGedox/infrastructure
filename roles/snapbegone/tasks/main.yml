@@ -1,0 +1,30 @@
+---
+- name: Stop services or sockets
+  ansible.builtin.service:
+    name: "{{ item }}"
+    state: stopped
+  failed_when: false
+  loop:
+    - snapd.service
+    - snapd.socket
+
+- name: Remove snapd package
+  ansible.builtin.apt:
+    name: snapd
+    state: absent
+
+- name: Prevent snapd from ever being installed
+  ansible.builtin.dpkg_selections:
+    name: snapd
+    selection: hold
+
+- name: Remove snapd-related directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /var/snap
+    - /var/lib/snapd
+    - /var/cache/snapd
+    - /run/snapd-snap.socket
+    - /run/snapd.socket

@@ -1,0 +1,23 @@
+---
+- name: Install nvidia packages
+  ansible.builtin.apt:
+    name:
+      - nvidia-headless-470
+      - libnvidia-encode-470
+      - libnvidia-decode-470
+      - libnvidia-fbc1-470
+      - nvidia-utils-470
+      - nvidia-container-runtime
+    state: present
+    update_cache: yes
+
+- name: Setup nvidia container toolkit repository
+  ansible.builtin.shell: "distribution=$(. /etc/os-release;echo $ID$VERSION_ID) && curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - && curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list"
+
+- name: Install nvidia docker support
+  ansible.builtin.apt:
+    name: nvidia-docker2
+    update_cache: yes
+
+- ansible.builtin.debug:
+    msg: "Reboot the server if this is the first time you run this"
