@@ -1,9 +1,6 @@
 .vaultfile
 /collections
-/roles/geerlingguy.*
-/roles/oefenweb.*
-/roles/cloudalchemy.*
-/roles/patrickjahns.*
+/galaxy_roles
 
 # Virtualenv
 /lib

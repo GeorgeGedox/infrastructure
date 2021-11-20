@@ -1,13 +1,17 @@
 ---
 roles:
   - name: geerlingguy.docker
-    version: 4.1.0
+    version: 4.1.1
   - name: oefenweb.fail2ban
     version: v3.3.13
   - name: cloudalchemy.node_exporter
     version: 1.0.0
   - name: patrickjahns.promtail
     version: 1.11.0
+  - name: geerlingguy.swap
+    version: 1.0.2
+  - name: mrlesmithjr.netplan
+    version: v0.3.0
 
 collections:
   - name: ansible.posix

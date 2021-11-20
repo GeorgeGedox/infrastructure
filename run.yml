@@ -5,8 +5,11 @@
     - vars/vault.yml
   roles:
     - role: packages_setup
+      tags: packages
     - role: cloudalchemy.node_exporter
+      tags: node_exporter
     - role: patrickjahns.promtail
+      tags: promtail
 
 - hosts: apollo
   become: true
@@ -14,18 +17,35 @@
     - vars/vault.yml
   roles:
     - role: packages_setup
-    - role: geerlingguy.docker
-    - role: storage_setup
-    - role: snapraid
-    - role: samba
-    - role: dir_skeleton
-    - role: awesome_motd
-    - role: cloudalchemy.node_exporter
-    - role: patrickjahns.promtail
-    - role: textfile_collector
-    - role: adguardhome_prep
+      tags: packages
+    - role: geerlingguy.swap
+      tags: swap
     - role: dns_setup
+      tags: dns
+    - role: netplan
+      tags: netplan
+    - role: geerlingguy.docker
+      tags: docker
+    - role: storage_setup
+      tags: storage
+    - role: snapraid
+      tags: snapraid
+    - role: samba
+      tags: samba
+    - role: dir_skeleton
+      tags: skeleton
+    - role: awesome_motd
+      tags: motd
+    - role: cloudalchemy.node_exporter
+      tags: node_exporter
+    - role: patrickjahns.promtail
+      tags: promtail
+    - role: textfile_collector
+      tags: textfile_collector
+    - role: adguardhome_prep
+      tags: adguard_prep
     - role: backups
+      tags: backups
 
 - hosts: gamma
   become: true
@@ -33,14 +53,28 @@
     - vars/vault.yml
   roles:
     - role: packages_setup
-    - role: geerlingguy.docker
-    - role: ddclient
-    - role: oefenweb.fail2ban
-    - role: awesome_motd
-    - role: dir_skeleton
-    - role: cloudalchemy.node_exporter
-    - role: textfile_collector
-    - role: patrickjahns.promtail
-    - role: adguardhome_prep
+      tags: packages
+    - role: geerlingguy.swap
+      tags: swap
     - role: dns_setup
+      tags: dns
+    - role: netplan
+      tags: netplan
+    - role: geerlingguy.docker
+      tags: docker
+    - role: ddclient
+      tags: ddclient
+    - role: dir_skeleton
+      tags: skeleton
+    - role: awesome_motd
+      tags: motd
+    - role: cloudalchemy.node_exporter
+      tags: node_exporter
+    - role: patrickjahns.promtail
+      tags: promtail
+    - role: textfile_collector
+      tags: textfile_collector
+    - role: adguardhome_prep
+      tags: adguard_prep
     - role: backups
+      tags: backups

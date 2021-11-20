@@ -1,5 +1,4 @@
 ---
-
 - name: check whether snapraid is installed
   shell: "dpkg-query -W '{{ snapraid_apt_package_name }}'"
   ignore_errors: True

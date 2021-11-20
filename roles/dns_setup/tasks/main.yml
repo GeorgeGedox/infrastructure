@@ -1,6 +1,6 @@
 ---
 - name: Install resolvconf
-  apt:
+  ansible.builtin.apt:
     name: resolvconf
     state: present
     update_cache: true
@@ -12,10 +12,10 @@
     name: resolvconf
 
 - name: Update config
-  copy:
+  ansible.builtin.copy:
     src: head
     dest: /etc/resolvconf/resolv.conf.d/head
     mode: "0644"
 
 - name: Update resolv.conf
-  shell: "resolvconf -u"
+  ansible.builtin.command: "resolvconf -u"

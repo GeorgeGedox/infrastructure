@@ -1,5 +1,4 @@
 ---
-
 - name: Schedule snapraid sync
   cron:
     name: snapraid sync

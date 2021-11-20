@@ -13,4 +13,3 @@ fail2ban_services:
   - name: sshd
     port: 22
     maxretry: 3
-    bantime: -1

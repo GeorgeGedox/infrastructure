@@ -1,9 +1,27 @@
 ---
-# Tested on Proxmox 6.4-4
-- hosts: epsilon
+# This will provision a fresh Proxmox instance with user in order
+# to be able to run the main playbook on it
+# This playbook is meant to be run using the root user
+# sshpass package might be needed on local machine
+
+# Tested on Proxmox 7, might need edits for other versions
+- hosts: proxmox
   become: true
-  tasks:
-    - name: Remove enterprise repo
-      file:
+  vars_files:
+    - vars/vault.yml
+  pre_tasks:
+    - name: Remove enterprise repository file
+      ansible.builtin.file:
         path: /etc/apt/sources.list.d/pve-enterprise.list
         state: absent
+
+    - name: Add no subscription community repository
+      ansible.builtin.apt_repository:
+        repo: deb http://download.proxmox.com/debian/pve bullseye pve-no-subscription
+        filename: pve-no-subscription
+        state: present
+  roles:
+    - role: packages_setup
+      tags: packages
+    - role: ssh_users
+      tags: ssh_users

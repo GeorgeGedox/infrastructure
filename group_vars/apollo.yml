@@ -2,6 +2,28 @@
 # sysctl_props
 inotify_max_user_watches: 524288
 
+# Swap settings
+swap_file_path: /swap.img
+swap_file_state: absent
+
+# Netplan setup
+netplan_enabled: true
+netplan_config_file: /etc/netplan/99-ansible-config.yaml
+netplan_remove_existing: true
+netplan_check_install: false
+netplan_apply: true
+netplan_configuration:
+  network:
+    version: 2
+    ethernets:
+      ens18:
+        dhcp4: no
+        addresses:
+          - 192.168.0.203/24
+        gateway4: 192.168.0.1
+        nameservers:
+          addresses: [8.8.8.8, 1.1.1.1]
+
 # Packages to be installed during setup
 packages_update: yes
 setup_packages:
@@ -38,11 +60,11 @@ textfile_collector_scripts_directory_path: /opt/textfile_collector
 textfile_collector_output_directory_path: /var/lib/node_exporter
 textfile_collector_cron: "*/5 * * * *"
 
-#patrickjahns.promtail
+# patrickjahns.promtail
 promtail_version: 2.2.1
 promtail_system_user: root
 promtail_user_additional_groups: ""
-promtail_loki_server_url: https://loki.int.georgev.design
+promtail_loki_server_url: https://loki.int.{{ vault_public_domain }}
 promtail_config_scrape_configs:
   - job_name: system
     static_configs:
@@ -139,7 +161,7 @@ snapraid_runner_delete_threshold: 250
 snapraid_runner_cron_jobs:
   - { job: '{{ snapraid_runner_command }}', name: 'snapraid_runner', weekday: '*', hour: '02' }
 
-# dir_sekelton
+# dir_skeleton
 skeleton_dirs:
   - path: /mnt/storage/media/blackhole
     owner: "{{ master_user.username }}"

@@ -1,5 +1,4 @@
 ---
-
 - name: clone snapraid-runner
   git:
     repo: https://github.com/Chronial/snapraid-runner.git
