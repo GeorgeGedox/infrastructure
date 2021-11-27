@@ -8,6 +8,15 @@ setup_packages:
   - python3
   - python3-pip
 
+# awesome-motd
+motd_files:
+  - src: 10-hostname-color
+    name: 10-hostname-color
+  - src: 20-sysinfo
+    name: 20-sysinfo
+  - src: 35-diskspace
+    name: 35-diskspace
+
 # cloudalchemy.node_exporter
 node_exporter_version: 1.2.0
 

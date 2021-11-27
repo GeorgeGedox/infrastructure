@@ -10,6 +10,8 @@
       tags: node_exporter
     - role: patrickjahns.promtail
       tags: promtail
+    - role: awesome_motd
+      tags: motd
 
 - hosts: ubuntu
   become: true

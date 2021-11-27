@@ -1,10 +1,15 @@
 ---
+# To be used only on fresh servers. Do not run on things like TueNAS, Proxmox, etc
 - hosts: all
   become: true
   vars_files:
     - vars/vault.yml
   roles:
     - role: ssh_users
+      tags: ssh_users
     - role: ssh_protect
+      tags: ssh_protect
     - role: oefenweb.fail2ban
+      tags: fail2ban
     - role: sysctl_props
+      tags: sysctl
