@@ -1,0 +1,19 @@
+---
+- name: Install ZSH
+  ansible.builtin.apt:
+    name: zsh
+    state: present
+
+- name: Clone repository
+  become_user: "{{ dotfile_user }}"
+  become: false
+  ansible.builtin.git:
+    repo: "{{ dotfile_repo }}"
+    dest: "{{ dotfile_destination }}"
+  when: dotfile_user is defined and not dotfile_user is none
+
+- name: Execute installer
+  become_user: "{{ dotfile_user }}"
+  become: false
+  ansible.builtin.command: "{{ dotfile_execution }}"
+  when: dotfile_user is defined and not dotfile_user is none

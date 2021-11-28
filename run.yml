@@ -12,6 +12,8 @@
       tags: promtail
     - role: awesome_motd
       tags: motd
+    - role: dotfiles
+      tags: dotfiles
 
 - hosts: ubuntu
   become: true
@@ -30,8 +32,6 @@
       tags: docker
     - role: dir_skeleton
       tags: skeleton
-    - role: awesome_motd
-      tags: motd
     - role: textfile_collector
       tags: textfile_collector
     - role: adguardhome_prep

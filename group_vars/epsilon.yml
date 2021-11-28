@@ -8,6 +8,9 @@ setup_packages:
   - python3
   - python3-pip
 
+# dotfiles
+dotfile_user: "{{ master_user.username }}"
+
 # awesome-motd
 motd_files:
   - src: 10-hostname-color

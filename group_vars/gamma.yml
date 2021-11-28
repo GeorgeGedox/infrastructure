@@ -12,6 +12,9 @@ motd_files:
   - src: 60-docker
     name: 60-docker
 
+# dotfiles
+dotfile_user: "{{ master_user.username }}"
+
 # sysctl_props
 inotify_max_user_watches: 524288
 
