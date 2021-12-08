@@ -1,7 +1,4 @@
 ---
-# swarm
-swarm_manager_ip: "192.168.0.202"
-
 # sysctl_props
 inotify_max_user_watches: 524288
 

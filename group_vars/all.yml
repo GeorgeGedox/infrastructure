@@ -1,4 +1,9 @@
 ---
+# swarm
+swarm_manager_ip: "192.168.0.202"
+swarm_create_network: true
+swarm_network_name: swarm-proxy
+
 # ssh_users with sudo access
 elevated_group_name: empowered
 ssh_users:

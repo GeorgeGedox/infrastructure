@@ -11,3 +11,10 @@
 - name: Show worker join token
   ansible.builtin.debug:
     msg: "Token to join as a worker: {{ swarm_worker_token }}"
+
+- name: Create overlay network
+  community.docker.docker_network:
+    name: "{{ swarm_network_name }}"
+    driver: overlay
+    attachable: true
+  when: swarm_create_network

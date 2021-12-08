@@ -1,2 +1,4 @@
 ---
 swarm_manager_ip: null
+swarm_create_network: false
+swarm_network_name: null
