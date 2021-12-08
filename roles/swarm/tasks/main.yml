@@ -1,0 +1,14 @@
+---
+- name: Install docker python module
+  ansible.builtin.pip:
+    executable: pip3
+    state: present
+    name: docker
+
+- name: Include manager tasks
+  ansible.builtin.import_tasks: manager.yml
+  when: "'swarm_manager' in group_names"
+
+- name: Include worker tasks
+  ansible.builtin.import_tasks: worker.yml
+  when: "'swarm_worker' in group_names"

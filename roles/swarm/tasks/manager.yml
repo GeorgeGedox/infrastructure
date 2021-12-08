@@ -1,0 +1,13 @@
+---
+- name: Create swarm
+  community.docker.docker_swarm:
+    state: present
+  register: swarm_manager
+
+- name: Set join token fact
+  ansible.builtin.set_fact:
+    swarm_worker_token: "{{ swarm_manager.swarm_facts.JoinTokens.Worker }}"
+
+- name: Show worker join token
+  ansible.builtin.debug:
+    msg: "Token to join as a worker: {{ swarm_worker_token }}"

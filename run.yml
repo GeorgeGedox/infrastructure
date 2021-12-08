@@ -30,6 +30,8 @@
       tags: netplan
     - role: geerlingguy.docker
       tags: docker
+    - role: swarm
+      tags: swarm
     - role: dir_skeleton
       tags: skeleton
     - role: textfile_collector

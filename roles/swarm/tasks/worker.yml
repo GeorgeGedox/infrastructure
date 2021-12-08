@@ -1,0 +1,8 @@
+---
+- name: Join swarm as worker
+  community.docker.docker_swarm:
+    state: join
+    join_token: "{{ hostvars[swarm_manager_ip].swarm_worker_token }}"
+    remote_addrs:
+      - "{{ swarm_manager_ip }}"
+  when: swarm_manager_ip and hostvars[swarm_manager_ip].swarm_worker_token is defined
