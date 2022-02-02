@@ -27,6 +27,7 @@ snapraid_config_excludes: []
 snapraid_config_hidden_files_enabled: false
 snapraid_config_hidden_files: nohidden
 snapraid_config_path: /etc/snapraid.conf
+snapraid_config_pool: /pool
 
 snapraid_runner_path: /opt/snapraid-runner/snapraid-runner
 snapraid_runner_conf: "{{ snapraid_runner_path }}.conf"

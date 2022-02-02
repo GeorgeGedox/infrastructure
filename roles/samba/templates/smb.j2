@@ -4,6 +4,13 @@
 
 [global]
 	workgroup = WORKGROUP
+  netbios name = LINUXSERVER
+  lanman auth = no
+  ntlm auth = yes
+  client lanman auth = no
+  wins support = yes
+  local master = yes
+  preferred master = yes
 	security = user
 	server string = %h server (Samba)
 	hosts allow = 127. 192.168.0.
@@ -13,10 +20,10 @@
 	printing = bsd
 	printcap name = /dev/null
 	disable spoolss = yes
-	disable netbios = yes
 	server role = standalone
 	server services = -dns, -nbt
 	smb ports = 445
+  unix extensions = no
 
 [private]
 	comment = Private storage

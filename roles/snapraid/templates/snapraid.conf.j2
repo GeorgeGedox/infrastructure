@@ -21,6 +21,9 @@ content {{ disk.path }}/snapraid.content
 content {{ disk.path }}/.snapraid.content
 {% endif %}
 {% endfor %}
+{% if snapraid_config_pool is defined and snapraid_config_pool|length %}
+pool {{ snapraid_config_pool }}
+{% endif %}
 
 # Data disks
 {% for disk in snapraid_data_disks %}
