@@ -101,6 +101,10 @@ data_disks:
     id: '/dev/disk/by-id/scsi-SATA_ST8000NE001-2M71_WSD3F54Z'
     fs: ext4
     opts: defaults
+  - path: /mnt/disk2
+    id: '/dev/disk/by-id/scsi-SATA_TOSHIBA_HDWR11A_6120A0MNFB4G'
+    fs: ext4
+    opts: defaults
   - path: /mnt/parity1
     id: '/dev/disk/by-id/scsi-SATA_WDC_WD101EFAX-68_VCG71VVN'
     fs: ext4
@@ -148,6 +152,8 @@ snapraid_parity_disks:
 
 snapraid_data_disks:
   - path: /mnt/disk1
+    content: true
+  - path: /mnt/disk2
     content: true
 
 snapraid_runner_path: /opt/snapraid-runner/snapraid-runner
