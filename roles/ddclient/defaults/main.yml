@@ -1,7 +1,7 @@
 ---
-ddclient_PUID: "0"
-ddclient_PGID: "0"
-ddclient_TZ: UTC
+ddclient_docker_uid: "0"
+ddclient_docker_gid: "0"
+ddclient_docker_tz: UTC
 ddclient_volume: null
 ddclient_user: root
 ddclient_group: root

@@ -11,13 +11,14 @@
   ansible.builtin.copy:
     src: adguard.conf
     dest: /etc/systemd/resolved.conf.d/adguard.conf
-    mode: "0644"
+    mode: 0644
 
 - name: Create copy of resolv.conf file
   ansible.builtin.copy:
     src: /etc/resolv.conf
     dest: /etc/resolv.conf.bak
     remote_src: yes
+    mode: 0644
 
 - name: Symlink resolv.conf to /run/systemd/resolve/resolv.conf
   ansible.builtin.file:

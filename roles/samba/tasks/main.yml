@@ -10,6 +10,7 @@
     dest: /etc/samba/smb.conf
     owner: root
     group: root
+    mode: 0644
 
 - name: Restart and enable SMB
   service:

@@ -12,12 +12,13 @@
     update_cache: yes
 
 - name: Setup nvidia container toolkit repository
-  ansible.builtin.shell: "distribution=$(. /etc/os-release;echo $ID$VERSION_ID) && curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - && curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list"
+  ansible.builtin.shell: "set -o pipefail && distribution=$(. /etc/os-release;echo $ID$VERSION_ID) && curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - && curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list"
 
 - name: Install nvidia docker support
   ansible.builtin.apt:
     name: nvidia-docker2
     update_cache: yes
 
-- ansible.builtin.debug:
+- name: Show reboot message
+  ansible.builtin.debug:
     msg: "Reboot the server if this is the first time you run this"

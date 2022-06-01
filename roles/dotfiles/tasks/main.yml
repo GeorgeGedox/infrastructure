@@ -10,6 +10,7 @@
   ansible.builtin.git:
     repo: "{{ dotfile_repo }}"
     dest: "{{ dotfile_destination }}"
+    version: master
   when: dotfile_user is defined and not dotfile_user is none
 
 - name: Execute installer

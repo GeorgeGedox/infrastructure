@@ -1,4 +1,7 @@
 ---
+exclude_paths:
+  - ~/.cache/
+  - .cache/
 offline: true
 skip_list:
   - no-changed-when

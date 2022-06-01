@@ -1,13 +1,18 @@
 ---
 - name: check valid configuration
   block:
-    - fail:
+    - name: Fail if no data disks are defined
+      fail:
         msg: No data disks defined
       when: snapraid_data_disks | length == 0
-    - fail:
+
+    - name: Fail if no parity disks are defined
+      fail:
         msg: No parity disks defined
       when: snapraid_parity_disks | length == 0
-    - fail:
+
+    - name: Fail if no content is defined
+      fail:
         msg: No content files defined
       when:
         - snapraid_content_files | length == 0

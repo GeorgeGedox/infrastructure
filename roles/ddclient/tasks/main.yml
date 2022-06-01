@@ -14,9 +14,9 @@
       - 8.8.8.8
       - 1.1.1.1
     env:
-      PUID: "{{ ddclient_PUID }}"
-      PGID: "{{ ddclient_PGID }}"
-      TZ: "{{ ddclient_TZ }}"
+      PUID: "{{ ddclient_docker_uid }}"
+      PGID: "{{ ddclient_docker_gid }}"
+      TZ: "{{ ddclient_docker_tz }}"
     volumes:
       - "{{ ddclient_volume }}:/config"
     restart_policy: unless-stopped
@@ -27,4 +27,5 @@
     dest: "{{ ddclient_volume }}/ddclient.conf"
     owner: "{{ ddclient_user }}"
     group: "{{ ddclient_group }}"
+    mode: 0644
   notify: restart ddclient container

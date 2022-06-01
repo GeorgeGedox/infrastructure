@@ -5,7 +5,8 @@
     patterns: "*.yml,*.yaml"
   register: _netplan_configs
 
-- debug: var=_netplan_configs
+- name: Debug netplan if defined
+  debug: var=_netplan_configs
   when: debug is defined and ( debug | bool )
 
 - name: Removing Existing Configurations

@@ -31,4 +31,4 @@
         state: present
       loop: "{{ ssh_users }}"
   when: ssh_users|length > 0
-  become: yes
+  become: true
