@@ -2,23 +2,38 @@
 - name: Install nvidia packages
   ansible.builtin.apt:
     name:
-      - nvidia-headless-470
-      - libnvidia-encode-470
-      - libnvidia-decode-470
-      - libnvidia-fbc1-470
-      - nvidia-utils-470
-      - nvidia-container-runtime
+      - nvidia-headless-{{ nvidia_driver_version }}
+      - libnvidia-encode-{{ nvidia_driver_version }}
+      - libnvidia-decode-{{ nvidia_driver_version }}
+      - libnvidia-fbc1-{{ nvidia_driver_version }}
+      - nvidia-utils-{{ nvidia_driver_version }}
     state: present
     update_cache: yes
 
 - name: Setup nvidia container toolkit repository
-  ansible.builtin.shell: "set -o pipefail && distribution=$(. /etc/os-release;echo $ID$VERSION_ID) && curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - && curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list"
+  ansible.builtin.shell: >
+    set -o pipefail &&
+    distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
+    && curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg
+    && curl -s -L https://nvidia.github.io/libnvidia-container/$distribution/libnvidia-container.list |
+    sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' |
+    sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
+  args:
+    executable: /bin/bash
 
 - name: Install nvidia docker support
   ansible.builtin.apt:
     name: nvidia-docker2
     update_cache: yes
 
+- name: Copy Docker daemon.json config for nvidia driver
+  ansible.builtin.copy:
+    src: docker_daemon.json
+    dest: /etc/docker/daemon.json
+    owner: root
+    group: root
+    mode: 0644
+
 - name: Show reboot message
   ansible.builtin.debug:
-    msg: "Reboot the server if this is the first time you run this"
+    msg: "Reboot the server to load the drivers!!"
