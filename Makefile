@@ -5,11 +5,11 @@ requirements: venv ## Install Ansible requirements (roles and collections)
 	$(VENV)/ansible-galaxy install -r requirements.yml --force
 
 .PHONY: decrypt
-decrypt: ## Decrypt all ansible vault files
+decrypt: venv ## Decrypt all ansible vault files
 	$(VENV)/ansible-vault decrypt group_vars/**/secrets.yml
 
 .PHONY: encrypt
-encrypt: ## Encrypt all ansible vault files
+encrypt: venv ## Encrypt all ansible vault files
 	$(VENV)/ansible-vault encrypt group_vars/**/secrets.yml
 
 .PHONY: lint
@@ -17,10 +17,13 @@ lint: venv ## Run ansible-lint on the entire project
 	$(VENV)/ansible-lint
 
 .PHONY: setup
-setup: requirements ## Setup project
-	@./git-init.sh
-	@echo "\e[1;32mAnsible vault pre-commit hook installed!\e[0m"
-	@echo "Create a .vaultfile file containing the vault password in the parent directory."
+setup: requirements venv ## Setup project
+	$(VENV)/pre-commit install -f
+
+.PHONY: clean
+clean: venv ## Remove all git hooks and remove venv
+	$(VENV)/pre-commit uninstall
+	$(MAKE) clean-venv
 
 .PHONY: help
 help: ## Display this help screen

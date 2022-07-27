@@ -1,7 +1,7 @@
 ---
 exclude_paths:
-  - ~/.cache/
   - .cache/
+  - group_vars/**/secrets.yml
 offline: true
 skip_list:
   - no-changed-when

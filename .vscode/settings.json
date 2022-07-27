@@ -1,6 +1,6 @@
 {
     "ansible.python.activationScript": ".venv/bin/activate",
     "python.defaultInterpreterPath": ".venv/bin/python",
-    "editor.renderWhitespace": "all",
+    "editor.renderWhitespace": "selection",
     "python.terminal.activateEnvInCurrentTerminal": true
 }

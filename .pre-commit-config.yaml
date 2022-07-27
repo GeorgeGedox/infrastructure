@@ -1,0 +1,21 @@
+---
+fail_fast: true
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+  - repo: local
+    hooks:
+      - id: ansible-vault-check
+        name: ansible-vault-check
+        entry: ./vault-check-hook.sh
+        language: script
+        files: ((?:^|\/)secrets\.ya?ml$)
+        always_run: true
+  # TODO: Enable ansible-lint after fixing every lint issue
+  # - repo: https://github.com/ansible-community/ansible-lint
+  #   rev: v6.3.0
+  #   hooks:
+  #     - id: ansible-lint
