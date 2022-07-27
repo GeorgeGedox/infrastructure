@@ -1,7 +1,4 @@
-.vaultfile
-/collections
-/galaxy_roles
-
-# Virtualenv
-/.venv
+/.vaultfile
 /Makefile.venv
+/.ansible
+/.venv

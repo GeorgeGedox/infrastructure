@@ -1,21 +1,30 @@
-default:
-	@echo "Please select an option"
+.DEFAULT_GOAL := help
 
-requirements: venv
+.PHONY: requirements
+requirements: venv ## Install Ansible requirements (roles and collections)
 	$(VENV)/ansible-galaxy install -r requirements.yml --force
 
-decrypt:
-	$(VENV)/ansible-vault decrypt vars/vault.yml
+.PHONY: decrypt
+decrypt: ## Decrypt all ansible vault files
+	$(VENV)/ansible-vault decrypt group_vars/**/secrets.yml
 
-encrypt:
-	$(VENV)/ansible-vault encrypt vars/vault.yml
+.PHONY: encrypt
+encrypt: ## Encrypt all ansible vault files
+	$(VENV)/ansible-vault encrypt group_vars/**/secrets.yml
 
-gitinit:
+.PHONY: lint
+lint: venv ## Run ansible-lint on the entire project
+	$(VENV)/ansible-lint
+
+.PHONY: setup
+setup: requirements ## Setup project
 	@./git-init.sh
 	@echo "\e[1;32mAnsible vault pre-commit hook installed!\e[0m"
 	@echo "Create a .vaultfile file containing the vault password in the parent directory."
 
-setup: requirements gitinit
+.PHONY: help
+help: ## Display this help screen
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' Makefile | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
 
 include Makefile.venv
 Makefile.venv:
