@@ -1,9 +1,7 @@
 .vaultfile
 /collections
 /galaxy_roles
-/.vscode
 
 # Virtualenv
-/lib
-/bin
-pyvenv.cfg
+/.venv
+/Makefile.venv

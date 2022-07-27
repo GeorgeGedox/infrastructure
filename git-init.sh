@@ -8,9 +8,9 @@ if [ -d .git/ ]; then
 rm .git/hooks/pre-commit
 cat <<EOT >> .git/hooks/pre-commit
 if ( cat group_vars/**/secrets.yml | grep -q "\$ANSIBLE_VAULT;" ); then
-echo "[38;5;108mVault Encrypted. Safe to commit.[0m"
+echo "\e[38;5;108mVault Encrypted. Safe to commit.\e[0m"
 else
-echo "[38;5;208mVault not encrypted! Run 'make encrypt', run 'git add .' again and retry.[0m"
+echo "\e[38;5;208mVault not encrypted! Run 'make encrypt', run 'git add .' again and retry.\e[0m"
 exit 1
 fi
 EOT
