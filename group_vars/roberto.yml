@@ -1,0 +1,3 @@
+---
+# IP used for connection
+ansible_ssh_host: "{{ vault_roberto_ip }}"
