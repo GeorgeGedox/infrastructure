@@ -1,25 +1,24 @@
 ---
 - name: Install dependencies
-  apt:
+  ansible.builtin.apt:
     name:
       - figlet
       - lolcat
-      - hddtemp
     state: present
 
 - name: Remove all files in /etc/update-motd.d
-  file:
+  ansible.builtin.file:
     path: /etc/update-motd.d
     state: absent
 
 - name: Recreate directory /etc/update-motd.d
-  file:
+  ansible.builtin.file:
     path: /etc/update-motd.d
     state: directory
     mode: '755'
 
 - name: Copy motd files
-  copy:
+  ansible.builtin.copy:
     src: '{{ item.src }}'
     dest: /etc/update-motd.d/{{ item.name }}
     mode: '755'

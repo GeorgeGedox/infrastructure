@@ -90,11 +90,10 @@ promtail_config_scrape_configs:
           __path__: /var/log/backups/latest.log
 
 # geerlingguy.docker
-docker_edition: 'ce'
+docker_edition: "ce"
 docker_service_state: started
 docker_service_enabled: true
 docker_install_compose: true
-docker_compose_version: "1.29.0"
 docker_users:
   - "{{ master_user.username }}"
 

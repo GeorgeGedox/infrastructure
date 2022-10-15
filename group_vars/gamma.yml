@@ -93,7 +93,6 @@ docker_edition: "ce"
 docker_service_state: started
 docker_service_enabled: true
 docker_install_compose: true
-docker_compose_version: "1.29.0"
 docker_users:
   - "{{ master_user.username }}"
 
