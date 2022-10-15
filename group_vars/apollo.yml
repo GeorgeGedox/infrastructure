@@ -214,7 +214,8 @@ borgmatic_configs:
     consistency:
       checks:
         - repository
-      check_last: 3
+        - archives
+      check_last: 2
     hooks:
       healthchecks: "{{ vault_backup_hc.apollo.docker }}"
 
@@ -234,6 +235,7 @@ borgmatic_configs:
     consistency:
       checks:
         - repository
-      check_last: 3
+        - archives
+      check_last: 1
     hooks:
       healthchecks: "{{ vault_backup_hc.apollo.nextcloud }}"

@@ -1,18 +1,18 @@
 ---
 - name: Install borg and dependencies
-  apt:
+  ansible.builtin.apt:
     name: ['borgbackup', 'python3', 'python3-pip']
     state: present
 
 - name: Install borgmatic
-  pip:
+  ansible.builtin.pip:
     executable: pip3
     state: present
     version: "{{ borgmatic_version }}"
     name: borgmatic
 
 - name: Prepare directories
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
     mode: "0755"
@@ -23,7 +23,7 @@
     - "{{ backup_log_dir }}"
 
 - name: Populate configs
-  template:
+  ansible.builtin.template:
     src: borgmatic_config.j2
     dest: /etc/borgmatic.d/{{ item.name }}.yaml
     owner: root
@@ -34,7 +34,7 @@
     label: "{{ item.name }}"
 
 - name: Setup crontab file
-  template:
+  ansible.builtin.template:
     src: cronjob.j2
     dest: /etc/cron.d/backups
     owner: root
@@ -43,7 +43,7 @@
   when: backup_setup_cron
 
 - name: Setup log rotation
-  copy:
+  ansible.builtin.copy:
     dest: /etc/logrotate.d/backups
     owner: root
     group: root
