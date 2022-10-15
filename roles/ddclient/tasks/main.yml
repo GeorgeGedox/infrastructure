@@ -1,6 +1,6 @@
 ---
 - name: Install docker pip module
-  pip:
+  ansible.builtin.pip:
     name: docker
     state: present
 
@@ -22,7 +22,7 @@
     restart_policy: unless-stopped
 
 - name: Provision ddclient config file
-  template:
+  ansible.builtin.template:
     src: "ddclient.j2"
     dest: "{{ ddclient_volume }}/ddclient.conf"
     owner: "{{ ddclient_user }}"

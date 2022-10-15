@@ -50,7 +50,7 @@ textfile_collector_scripts_directory_path: /opt/textfile_collector
 textfile_collector_output_directory_path: /var/lib/node_exporter
 textfile_collector_cron: "*/5 * * * *"
 
-#patrickjahns.promtail
+# patrickjahns.promtail
 promtail_version: 2.2.1
 promtail_system_user: root
 promtail_user_additional_groups: ""
@@ -104,9 +104,9 @@ skeleton_dirs:
   - path: /home/{{ master_user.username }}/containers/managed
 
 # ddclient
-ddclient_PUID: "1000"
-ddclient_PGID: "1000"
-ddclient_TZ: "{{ master_user.timezone }}"
+ddclient_docker_uid: "1000"
+ddclient_docker_gid: "1000"
+ddclient_docker_tz: "{{ master_user.timezone }}"
 ddclient_volume: /home/{{ master_user.username }}/containers/managed/ddclient
 ddclient_user: "{{ master_user.username }}"
 ddclient_group: "{{ master_user.username }}"

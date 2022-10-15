@@ -2,12 +2,12 @@
 - name: Run the whole thing
   block:
     - name: Create '{{ elevated_group_name }}' group
-      group:
+      ansible.builtin.group:
         name: "{{ elevated_group_name }}"
         state: present
 
     - name: Allow '{{ elevated_group_name }}' group passwordless sudo
-      lineinfile:
+      ansible.builtin.lineinfile:
         path: /etc/sudoers
         state: present
         regexp: "^%{{ elevated_group_name }}"
@@ -15,7 +15,7 @@
         validate: "/usr/sbin/visudo -cf %s"
 
     - name: Create users and add them to the elevated group
-      user:
+      ansible.builtin.user:
         name: "{{ item.user }}"
         state: present
         groups: "{{ elevated_group_name }}"
@@ -25,7 +25,7 @@
       loop: "{{ ssh_users }}"
 
     - name: Set authorized keys for users
-      authorized_key:
+      ansible.posix.authorized_key:
         user: "{{ item.user }}"
         key: "{{ item.key }}"
         state: present

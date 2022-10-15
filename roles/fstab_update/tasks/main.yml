@@ -1,5 +1,6 @@
+---
 - name: Create mount point directories
-  file:
+  ansible.builtin.file:
     path: "{{ item.dest }}"
     state: directory
     owner: nobody
@@ -8,7 +9,7 @@
   loop: "{{ fstab_mounts }}"
 
 - name: Update fstab
-  mount:
+  ansible.posix.mount:
     path: "{{ item.dest }}"
     src: "{{ item.src }}"
     fstype: "{{ item.fs }}"

@@ -2,5 +2,5 @@
 dotfile_user: null
 dotfile_dir_name: .dotfiles
 dotfile_repo: https://github.com/GeorgeGedox/dotfiles.git
-dotfile_destination: /home/{{dotfile_user}}/{{ dotfile_dir_name }}
+dotfile_destination: /home/{{ dotfile_user }}/{{ dotfile_dir_name }}
 dotfile_execution: "{{ dotfile_destination }}/install"

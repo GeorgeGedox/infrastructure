@@ -1,6 +1,6 @@
 ---
 - name: Harden SSH configuration
-  lineinfile:
+  ansible.builtin.lineinfile:
     dest: "{{ ssh_protect_config_path }}"
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"

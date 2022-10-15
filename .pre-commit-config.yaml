@@ -14,8 +14,7 @@ repos:
         language: script
         files: ((?:^|\/)secrets\.ya?ml$)
         always_run: true
-  # TODO: Enable ansible-lint after fixing every lint issue
-  # - repo: https://github.com/ansible-community/ansible-lint
-  #   rev: v6.3.0
-  #   hooks:
-  #     - id: ansible-lint
+  - repo: https://github.com/ansible-community/ansible-lint
+    rev: v6.3.0
+    hooks:
+      - id: ansible-lint

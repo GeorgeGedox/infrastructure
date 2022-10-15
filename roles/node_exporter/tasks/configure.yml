@@ -1,6 +1,6 @@
 ---
 - name: Copy the node_exporter systemd service file
-  template:
+  ansible.builtin.template:
     src: node_exporter.service.j2
     dest: /etc/systemd/system/node_exporter.service
     owner: root
@@ -8,9 +8,10 @@
     mode: 0644
   notify: restart node_exporter
 
-- block:
+- name: When textfile collector dir is defined
+  block:
     - name: Create node_exporter config directory
-      file:
+      ansible.builtin.file:
         path: "/etc/node_exporter"
         state: directory
         owner: root
@@ -18,7 +19,7 @@
         mode: u+rwX,g+rwX,o=rX
 
     - name: Copy the node_exporter config file
-      template:
+      ansible.builtin.template:
         src: config.yaml.j2
         dest: /etc/node_exporter/config.yaml
         owner: root
@@ -31,7 +32,7 @@
     ( node_exporter_basic_auth_users | length > 0 )
 
 - name: Create textfile collector dir
-  file:
+  ansible.builtin.file:
     path: "{{ node_exporter_textfile_dir }}"
     state: directory
     owner: "{{ _node_exporter_system_user }}"

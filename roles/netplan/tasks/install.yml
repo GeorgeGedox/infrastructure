@@ -1,6 +1,6 @@
 ---
 - name: Install netplan
-  apt:
+  ansible.builtin.apt:
     name: "{{ netplan_packages }}"
     state: present
   become: true

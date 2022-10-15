@@ -1,6 +1,6 @@
 ---
 - name: Create mount points
-  file:
+  ansible.builtin.file:
     path: "{{ item.path }}"
     state: directory
     owner: nobody
@@ -9,7 +9,7 @@
   loop: "{{ data_disks }}"
 
 - name: Mount disks
-  mount:
+  ansible.posix.mount:
     path: "{{ item.path }}"
     src: "{{ item.id }}"
     fstype: "{{ item.fs }}"
@@ -18,12 +18,12 @@
   loop: "{{ data_disks }}"
 
 - name: Install MergerFS
-  apt:
+  ansible.builtin.apt:
     name: mergerfs
     state: present
 
 - name: Create mount point for MergerFS
-  file:
+  ansible.builtin.file:
     path: "{{ mergerfs_mount.dest }}"
     state: directory
     owner: nobody
@@ -31,7 +31,7 @@
     mode: "777"
 
 - name: Mount MergerFS
-  mount:
+  ansible.posix.mount:
     path: "{{ mergerfs_mount.dest }}"
     src: "{{ mergerfs_mount.src }}"
     fstype: "{{ mergerfs_mount.fs }}"

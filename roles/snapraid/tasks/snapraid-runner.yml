@@ -1,12 +1,12 @@
 ---
 - name: clone snapraid-runner
-  git:
+  ansible.builtin.git:
     repo: https://github.com/Chronial/snapraid-runner.git
     dest: /opt/snapraid-runner
     version: master
 
 - name: install snapraid-runner configuration file
-  template:
+  ansible.builtin.template:
     src: snapraid-runner.conf.j2
     dest: "{{ snapraid_runner_conf }}"
     owner: root
@@ -14,14 +14,14 @@
     mode: 0775
 
 - name: setup cron job snapraid-runner
-  cron:
+  ansible.builtin.cron:
     user: "root"
     job: "{{ item.job }}"
     name: "{{ item.name }}"
     weekday: "{{ item.weekday | default ('*') }}"
     minute: "{{ item.minute | default ('00') }}"
     hour: "{{ item.hour | default ('00') }}"
-    day: "{{ item.day|default('*') }}"
+    day: "{{ item.day | default('*') }}"
     cron_file: snapraid_runner
   with_items:
     - "{{ snapraid_runner_cron_jobs }}"

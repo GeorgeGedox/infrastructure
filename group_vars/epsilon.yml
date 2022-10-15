@@ -23,7 +23,7 @@ motd_files:
 # cloudalchemy.node_exporter
 node_exporter_version: 1.2.0
 
-#patrickjahns.promtail
+# patrickjahns.promtail
 promtail_version: 2.2.1
 promtail_system_user: root
 promtail_user_additional_groups: ""
