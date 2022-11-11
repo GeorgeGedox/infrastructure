@@ -4,10 +4,6 @@
   roles:
     - role: packages_setup
       tags: packages
-    - role: node_exporter
-      tags: node_exporter
-    - role: patrickjahns.promtail
-      tags: promtail
     - role: awesome_motd
       tags: motd
     - role: dotfiles
@@ -18,14 +14,18 @@
   roles:
     - role: snapbegone
       tags: snap
-    - role: geerlingguy.swap
-      tags: swap
-    - role: dns_setup
-      tags: dns
     - role: netplan
       tags: netplan
     - role: geerlingguy.docker
       tags: docker
+
+- hosts: apollo
+  become: true
+  roles:
+    - role: node_exporter
+      tags: node_exporter
+    - role: patrickjahns.promtail
+      tags: promtail
     - role: swarm
       tags: swarm
     - role: dir_skeleton
@@ -36,10 +36,10 @@
       tags: adguard_prep
     - role: backups
       tags: backups
-
-- hosts: apollo
-  become: true
-  roles:
+    - role: geerlingguy.swap
+      tags: swap
+    - role: dns_setup
+      tags: dns
     - role: nvidia_gpu
       tags: gpu
     - role: storage_setup
@@ -52,5 +52,23 @@
 - hosts: gamma
   become: true
   roles:
+    - role: node_exporter
+      tags: node_exporter
+    - role: patrickjahns.promtail
+      tags: promtail
+    - role: swarm
+      tags: swarm
+    - role: dir_skeleton
+      tags: skeleton
+    - role: textfile_collector
+      tags: textfile_collector
+    - role: adguardhome_prep
+      tags: adguard_prep
+    - role: backups
+      tags: backups
+    - role: geerlingguy.swap
+      tags: swap
+    - role: dns_setup
+      tags: dns
     - role: ddclient
       tags: ddclient
