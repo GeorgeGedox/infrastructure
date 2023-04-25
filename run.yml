@@ -6,8 +6,6 @@
       tags: packages
     - role: awesome_motd
       tags: motd
-    - role: dotfiles
-      tags: dotfiles
 
 - hosts: ubuntu
   become: true

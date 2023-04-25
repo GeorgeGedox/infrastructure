@@ -35,7 +35,7 @@ netplan_configuration:
       eno1:
         dhcp4: no
         addresses:
-          - 192.168.0.202/24
+          - 192.168.0.202/23
         gateway4: 192.168.0.1
         nameservers:
           addresses: [8.8.8.8, 1.1.1.1]
@@ -126,6 +126,7 @@ borgmatic_configs:
         - "{{ vault_rsync_repo }}:backups/gamma_containers"
       exclude_patterns:
         - /home/{{ master_user.username }}/containers/main/bitwarden/icon_cache
+        - /home/{{ master_user.username }}/containers/main/redbot/venv
       remote_executable: borg1
       exclude_caches: true
     storage:

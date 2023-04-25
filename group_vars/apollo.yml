@@ -19,7 +19,7 @@ netplan_configuration:
       ens18:
         dhcp4: no
         addresses:
-          - 192.168.0.203/24
+          - 192.168.0.203/23
         gateway4: 192.168.0.1
         nameservers:
           addresses: [8.8.8.8, 1.1.1.1]
@@ -195,35 +195,14 @@ borgmatic_configs:
   - name: containers
     location:
       source_dirs:
-        - /mnt/tank/appdata/apollo_docker
+        - /home/{{ master_user.username }}/containers
       repositories:
         - "{{ vault_rsync_repo }}:backups/apollo_containers"
       exclude_patterns:
-        - /mnt/tank/appdata/apollo_docker/bazarr/cache
-        - /mnt/tank/appdata/apollo_docker/jellyfin/cache
-        - /mnt/tank/appdata/apollo_docker/jellyfin/data/transcodes
-        - /mnt/tank/appdata/apollo_docker/jellyfin/.cache
-      remote_executable: borg1
-      exclude_caches: true
-    storage:
-      passphrase: "{{ vault_backups_passphrase }}"
-    retention:
-      keep_hourly: 24
-      keep_daily: 7
-    consistency:
-      checks:
-        - repository
-        - archives
-      check_last: 2
-    hooks:
-      healthchecks: "{{ vault_backup_hc.apollo.docker }}"
-
-  - name: nextcloud
-    location:
-      source_dirs:
-        - /mnt/tank/nextcloud
-      repositories:
-        - "{{ vault_rsync_repo }}:backups/apollo_nextcloud"
+        - /home/{{ master_user.username }}/containers/bazarr/cache
+        - /home/{{ master_user.username }}/containers/jellyfin/cache
+        - /home/{{ master_user.username }}/containers/jellyfin/data/transcodes
+        - /home/{{ master_user.username }}/containers/jellyfin/.cache
       remote_executable: borg1
       exclude_caches: true
     storage:
@@ -237,4 +216,4 @@ borgmatic_configs:
         - archives
       check_last: 1
     hooks:
-      healthchecks: "{{ vault_backup_hc.apollo.nextcloud }}"
+      healthchecks: "{{ vault_backup_hc.apollo.docker }}"
