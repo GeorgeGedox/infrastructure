@@ -1,5 +1,5 @@
 ---
-# To be used only on fresh servers. Do not run on things like TueNAS, Proxmox, etc
+# To be used only on fresh servers. Do not run on things like TrueNAS, Proxmox, etc
 - hosts: all
   become: true
   roles:

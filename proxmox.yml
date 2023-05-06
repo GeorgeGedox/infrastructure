@@ -7,8 +7,6 @@
 # Tested on Proxmox 7, might need edits for other versions
 - hosts: proxmox
   become: true
-  vars_files:
-    - vars/vault.yml
   pre_tasks:
     - name: Remove enterprise repository file
       ansible.builtin.file:

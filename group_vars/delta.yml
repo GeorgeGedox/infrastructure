@@ -1,0 +1,18 @@
+---
+# Packages
+setup_packages:
+  - vim
+  - git
+  - htop
+  - sudo
+  - python3
+  - python3-pip
+
+# awesome-motd
+motd_files:
+  - src: 10-hostname-color
+    name: 10-hostname-color
+  - src: 20-sysinfo
+    name: 20-sysinfo
+  - src: 35-diskspace
+    name: 35-diskspace
